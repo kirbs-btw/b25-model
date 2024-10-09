@@ -1,2 +1,4 @@
 venv
 data/playlists_dataset
+data/csv/*
+data/tokenized_data/*

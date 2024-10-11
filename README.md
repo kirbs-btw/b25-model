@@ -24,7 +24,7 @@ These models are able to create vectors out of song names.
 ### Skip-Gram
 
 ### Conclusion / work in progress
-CBOW is better for Datasets with many fequent occuring words. Skip-Gram is better with many less frequent words ([Concluded here](https://iopscience.iop.org/article/10.1088/1742-6596/2634/1/012052/meta)). Still need to test what algorithm performes better or is it the case to create an own algorithm for embedding songs inside playlists.  
+CBOW is better for Datasets with many fequent occuring words. Skip-Gram is better with many less frequent words ([Concluded here](https://iopscience.iop.org/article/10.1088/1742-6596/2634/1/012052/meta)). Still need to test what algorithm performes better or is it the case to create an own algorithm for embedding songs inside playlists.  Both algorithms work with some kind of context window to understand the focused word. This type of window looking should not apply to playlists because there is the whole list relevant.
 
 ## ideas
 could also take a dataset of playlist
@@ -34,6 +34,7 @@ Could scramble the playlist to let the model understand what the songs mean and 
 
 CBOW will be the main focuse here at 
 
+It's possible that I need to implement my own model for embedding those words of the playlist to let the context window slip.
 
 Following step would be to get the embedding algorithms working with mp3 data.
 

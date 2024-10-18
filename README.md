@@ -73,8 +73,6 @@ CBOW is better for Datasets with many fequent occuring words. Skip-Gram is bette
 could also take a dataset of playlist
 with songs in it and embedding them like the "sentences" to get the style of the individual songs. Would be one step in the direction of understanding the songs.
 
-Could scramble the playlist to let the model understand what the songs mean and that the words in the specifc order are not important.  
-
 CBOW will be the main focuse here at 
 
 It's possible that I need to implement my own model for embedding those words of the playlist to let the context window slip.

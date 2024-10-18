@@ -7,6 +7,9 @@ The approach in question extends this concept by drawing an analogy between sent
 
 Many word embedding algorithms, such as Word2Vec, focus on local context windows—capturing the relationships between a word and its immediate neighbors. This assumption of locality doesn't directly translate to playlists, where the relationship between songs isn't necessarily dependent on their proximity or order within the playlist. Hence, adapting such algorithms for playlist modeling requires addressing the contextual difference between word co-occurrence and song co-inclusion in playlists. 
 
+## Data
+The base dataset is from [kaggle](https://www.kaggle.com/datasets/andrewmvd/spotify-playlists)
+
 ## Models
 ### Text embedding Models
 These models are able to create vectors out of song names.

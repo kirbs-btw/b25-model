@@ -20,6 +20,8 @@ These models are able to create vectors out of song names.
 
 ## Model Validation
 
+The dataset is divided into two sets: training and testing, to mitigate overfitting. The model evaluation involves selecting a song from a playlist and allowing the model to predict the next song. If the predicted song is present in the same playlist, the model is marked as correct. Currently, the model is not evaluated on its ability to understand the context or sequence of songs, which represents a potential future testing phase. In essence, the model receives one song as input and suggests the next best matching song based on its learned associations.
+
 ### Model Evaluation Report
 
 #### Model 1: `b25-sn-v256`

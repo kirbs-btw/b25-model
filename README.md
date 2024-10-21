@@ -77,6 +77,8 @@ with songs in it and embedding them like the "sentences" to get the style of the
 
 CBOW will be the main focuse here at 
 
+Cleaning up the dataset for outliers to polish the accuracy of the trained model
+
 It's possible that I need to implement my own model for embedding those words of the playlist to let the context window slip.
 
 Following step would be to get the embedding algorithms working with mp3 data.

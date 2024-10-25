@@ -24,36 +24,18 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 
 ### Model Evaluation Report
 
-#### Model 1: `b25-sn-v256`
-- **Description**: This model is trained using the base dataset with no modifications or preprocessing, utilizing the most basic version of the model.
-- **Accuracy**: `0.0739` over 100 playlists.
-- **Remarks**: 
-  - The accuracy is relatively low, which suggests the model’s song suggestions are not closely aligned with user preferences.
-  - There is potential for improvement with further optimization, though it’s uncertain if the accuracy will improve with more playlist data.
+| Model              | Vector Size | Window | Min Count | SG | NS Exponent | Accuracy  |
+|--------------------|-------------|--------|-----------|----|-------------|-----------|
+| b25-sn-v50         | 50          | 5      | 1         | 0  | -           | 0.2607    |
+| b25-sn-v256-a      | 256         | 5      | 1         | 0  | -           | 0.2809    | 
+| b25-sn-v256-b      | 256         | 10     | 1         | 0  | -           | 0.3198    |
+| b25-sn-v256-c      | 256         | 20     | 1         | 0  | -           | 0.3953    |
+| b25-sn-v256-d      | 256         | 20     | 1         | 1  | 0.0         | 0.4845    |
+| b25-sn-v512-a      | 512         | 100    | 1         | 0  | -           | 0.5000    | 
 
-#### Model 2: `b25-sn-v256-b`
-- **Description**: This model is trained on a larger dataset. The base dataset is extended with shuffled playlists to add variability.
-- **Accuracy**: `0.2774` over 100 playlists.
-- **Remarks**:
-  - Achieving a ~27.7% accuracy means that approximately 1 in 4 suggested songs is correct, which is a solid improvement compared to the first model.
-  - A decent result for a second iteration, indicating some improvements from increased data variety.
-
-#### Model 3: `b25-sn-v256-c`
-- **Description**: Based on the dataset of `b25-sn-v256-b`, but with an increased context window of 20 (instead of the previous 5).
-- **Accuracy**: `0.4882` over 100 playlists.
-- **Remarks**: 
-  - A significant improvement in accuracy (~48.8%), suggesting that increasing the context window allows for better understanding of user preferences and enhances the quality of song recommendations.
-
-#### Model 4: `b25-sn-v256-d`
-- **Description**: This model uses the same dataset as `b25-sn-v256-c`, but the training set is reduced to 80% of the data to avoid overfitting and allow for better generalization.
-- **Accuracy**: `0.2134` over 100 playlists.
-- **Remarks**: 
-  - The reduction in training data led to a drop in accuracy, as expected (~21.3%). 
-  - The model might benefit from a better train-test split, particularly ensuring that the data is shuffled to remove any bias towards specific sections of the dataset.
 
 ### General Observations and Future Steps
-- **Need for Larger Test Sets**: All models should be tested against a much larger set of playlists, as testing on only 100 playlists may not provide sufficient variability and insight into model performance.
-- **Train-Test Split**: Proper partitioning between training and testing datasets is essential to prevent overfitting and ensure the model isn’t just learning patterns specific to the training data.
+- **Need for Larger Test Sets**: All models should be tested against a much larger set of playlists, as testing on only 250 playlists may not provide sufficient variability and insight into model performance. Thats about 10.000 songs
 - **Accuracy Potential**: It remains to be seen how high the accuracy can reach with these approaches, but further experimentation and optimization are necessary.
 
 ### Next Steps

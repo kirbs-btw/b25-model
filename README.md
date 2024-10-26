@@ -46,7 +46,26 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 
 
 ## learning algorithms
-### CBOW (Continuous-bag-of-words)
+### CBOW (Continuous-Bag-of-Words)
+
+The Continuous-Bag-of-Words (CBOW) model aims to predict a target word, known as the *center word*, based on a given context of surrounding words. This model operates under the distributional hypothesis, which suggests that words appearing in similar contexts share similar meanings. Consequently, words located closely in a text are assumed to be highly similar, whereas words that are far apart are often dissimilar in meaning.
+
+In CBOW, the probability \( P \) of predicting the center word \( c \) given surrounding context words \( w_1, w_2, \ldots, w_n \) is calculated to maximize the likelihood of the center word appearing in the context. This is formally represented as:
+
+\[
+P(c | w_1, w_2, \ldots, w_n) = P(c|w_1) \times P(c|w_2) \times \ldots \times P(c|w_n)
+\]
+
+where \( P(c|w_i) \) represents the conditional probability of the center word given each individual context word \( w_i \). The model is trained by adjusting weights to maximize this probability, leading to an embedding space that captures semantic relationships based on co-occurrence.
+
+In a mathematical sense, the CBOW objective is to maximize the overall probability for the corpus. Given a hyper-parameter \( \theta \) (which represents model parameters), the objective function is:
+
+\[
+\text{obj} = \arg \max_\theta \sum_{w \in \text{text}} \sum_{c \in \text{context}(w)} P(c|w; \theta)
+\]
+
+By training on these conditional probabilities, CBOW creates dense vector embeddings that reflect semantic similarities between words based on their contexts.
+
 
 ### Skip-Gram
 

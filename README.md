@@ -11,13 +11,6 @@ Many word embedding algorithms, such as Word2Vec, focus on local context windows
 The base dataset is from [kaggle](https://www.kaggle.com/datasets/andrewmvd/spotify-playlists)
 
 ## Models
-### Text embedding Models
-These models are able to create vectors out of song names.
-
-- b25-sn-v50: song name - Vector dim 50
-
-- b25-sn-v256: song name - Vector dim 256
-
 ## Model Validation
 
 The dataset is divided into two sets: training and testing, to mitigate overfitting. The model evaluation involves selecting a song from a playlist and allowing the model to predict the next song. If the predicted song is present in the same playlist, the model is marked as correct. Currently, the model is not evaluated on its ability to understand the context or sequence of songs, which represents a potential future testing phase. In essence, the model receives one song as input and suggests the next best matching song based on its learned associations.
@@ -40,7 +33,6 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 
 ### Next Steps
 - Expand testing to larger test sets for more reliable evaluation.
-- Shuffle the data before splitting into training and testing to reduce bias and improve generalization.
 - Continue optimizing models to explore the upper limits of achievable accuracy with this framework.
 
 
@@ -74,9 +66,6 @@ By training on these conditional probabilities, CBOW creates dense vector embedd
 CBOW is better for Datasets with many fequent occuring words. Skip-Gram is better with many less frequent words ([Concluded here](https://iopscience.iop.org/article/10.1088/1742-6596/2634/1/012052/meta)). Still need to test what algorithm performes better or is it the case to create an own algorithm for embedding songs inside playlists.  Both algorithms work with some kind of context window to understand the focused word. This type of window looking should not apply to playlists because there is the whole list relevant.
 
 ## ideas
-could also take a dataset of playlist
-with songs in it and embedding them like the "sentences" to get the style of the individual songs. Would be one step in the direction of understanding the songs.
-
 CBOW will be the main focuse here at 
 
 Cleaning up the dataset for outliers to polish the accuracy of the trained model
@@ -90,3 +79,5 @@ Following step would be to get the embedding algorithms working with mp3 data.
 Zarlenga, M.E., Barbiero, P., Ciravegna, G., Marra, G., Giannini, F., Diligenti, M., Precioso, F., Melacci, S., Weller, A., Lio, P. and Jamnik, M., 2022, November. [Concept embedding models](https://hal.science/hal-03854550/). In NeurIPS 2022-36th Conference on Neural Information Processing Systems.
 
 Xia, H., 2023, November. [Continuous-bag-of-words and Skip-gram for word vector training and text classification](https://iopscience.iop.org/article/10.1088/1742-6596/2634/1/012052/meta). In Journal of Physics: Conference Series (Vol. 2634, No. 1, p. 012052). IOP Publishing.
+
+Mikolov, T., 2013. [Efficient estimation of word representations in vector space](https://www.khoury.northeastern.edu/home/vip/teach/DMcourse/4_TF_supervised/notes_slides/1301.3781.pdf). arXiv preprint arXiv:1301.3781.

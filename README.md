@@ -25,7 +25,7 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 | b25-sn-v256-c      | 256         | 20     | 1         | CBOW  | -           | 0.3953    |
 | b25-sn-v256-d      | 256         | 20     | 1         | Skip-Gram  | 0.0         | 0.4845    |
 | b25-sn-v512-a      | 512         | 100    | 1         | CBOW  | -           | 0.5000    | 
-| b25-sn-v512-b      | 512         | 100    | 1         | Skip-Gram  | 0.0           |     | 
+| b25-sn-v512-b      | 512         | 100    | 1         | Skip-Gram  | 0.0           | 0.6721     | 
 
 
 ### General Observations and Future Steps

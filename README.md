@@ -17,14 +17,15 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 
 ### Model Evaluation Report
 
-| Model              | Vector Size | Window | Min Count | SG | NS Exponent | Accuracy  |
+| Model              | Vector Size | Window | Min Count | Training Algorithm | NS Exponent | Accuracy  |
 |--------------------|-------------|--------|-----------|----|-------------|-----------|
-| b25-sn-v50         | 50          | 5      | 1         | 0  | -           | 0.2607    |
-| b25-sn-v256-a      | 256         | 5      | 1         | 0  | -           | 0.2809    | 
-| b25-sn-v256-b      | 256         | 10     | 1         | 0  | -           | 0.3198    |
-| b25-sn-v256-c      | 256         | 20     | 1         | 0  | -           | 0.3953    |
-| b25-sn-v256-d      | 256         | 20     | 1         | 1  | 0.0         | 0.4845    |
-| b25-sn-v512-a      | 512         | 100    | 1         | 0  | -           | 0.5000    | 
+| b25-sn-v50         | 50          | 5      | 1         | CBOW  | -           | 0.2607    |
+| b25-sn-v256-a      | 256         | 5      | 1         | CBOW  | -           | 0.2809    | 
+| b25-sn-v256-b      | 256         | 10     | 1         | CBOW  | -           | 0.3198    |
+| b25-sn-v256-c      | 256         | 20     | 1         | CBOW  | -           | 0.3953    |
+| b25-sn-v256-d      | 256         | 20     | 1         | Skip-Gram  | 0.0         | 0.4845    |
+| b25-sn-v512-a      | 512         | 100    | 1         | CBOW  | -           | 0.5000    | 
+| b25-sn-v512-b      | 512         | 100    | 1         | Skip-Gram  | 0.0           |     | 
 
 
 ### General Observations and Future Steps

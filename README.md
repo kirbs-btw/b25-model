@@ -32,13 +32,7 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 - **Need for Larger Test Sets**: All models should be tested against a much larger set of playlists, as testing on only 250 playlists may not provide sufficient variability and insight into model performance. Thats about 10.000 songs
 - **Accuracy Potential**: It remains to be seen how high the accuracy can reach with these approaches, but further experimentation and optimization are necessary.
 
-### Next Steps
-- Expand testing to larger test sets for more reliable evaluation.
-- Continue optimizing models to explore the upper limits of achievable accuracy with this framework.
-
-
-
-## learning algorithms
+## Training Algorithms
 ### CBOW (Continuous-Bag-of-Words)
 
 The Continuous-Bag-of-Words (CBOW) model aims to predict a target word, known as the *center word*, based on a given context of surrounding words. This model operates under the distributional hypothesis, which suggests that words appearing in similar contexts share similar meanings. Consequently, words located closely in a text are assumed to be highly similar, whereas words that are far apart are often dissimilar in meaning.

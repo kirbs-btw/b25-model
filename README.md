@@ -26,6 +26,7 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 | b25-sn-v256-d      | 256         | 20     | 1         | Skip-Gram  | 0.0         | 0.4845    | 0.6513    |
 | b25-sn-v512-a      | 512         | 100    | 1         | CBOW  | -           | 0.5000    | 0.5703    |
 | b25-sn-v512-b      | 512         | 100    | 1         | Skip-Gram  | 0.0           | 0.6721     | 0.7739    |
+| b25-sn-v512-c      | 512         | 100    | 1         | CBOS  | -           | N/A | N/A |
 
 
 ### General Observations and Future Steps
@@ -54,8 +55,33 @@ $$
 By training on these conditional probabilities, CBOW creates dense vector embeddings that reflect semantic similarities between words based on their contexts.
 
 
-
 ### Skip-Gram
+
+The Skip-Gram model, an alternative to CBOW, is designed to predict the surrounding context words based on a given center word. This approach aims to maximize the probability of observing neighboring words, given a target word. Formally, the Skip-Gram model seeks to maximize the following objective function:
+
+$$
+\sum_{t=1}^{T} \sum_{-c \le j \le c, j \ne 0} \log P(w_{t+j} | w_t)
+$$
+
+Here:
+- $T$ is the total number of words in the corpus.
+- $c$ denotes the window size, representing how many context words around the target word are considered.
+- $P(w_{t+j} | w_t)$ is the conditional probability of a context word $w_{t+j}$ given the center word $w_t$.
+
+In Skip-Gram, this conditional probability $P(w_{t+j} | w_t)$ is typically computed using a Softmax function, which helps assign higher probabilities to context words that appear frequently with the center word. The formula for this probability is:
+
+$$
+P(w_o | w_I) = \frac{\exp(v_{w_o}^T v_{w_I})}{\sum_{w=1}^W \exp(v_w^T v_{w_I})}
+$$
+
+where:
+- $v_{w_o}$ and $v_{w_I}$ are the vector embeddings of the output (context) word $w_o$ and input (center) word $w_I$, respectively.
+- $W$ is the total vocabulary size.
+
+**Window Size Impact**: The parameter $c$, which controls the context window size, affects both accuracy and training time. Larger windows tend to capture broader context but increase computation time, as each word is paired with more context words for training.
+
+In the context of playlist modeling, the Skip-Gram approach can be adapted by treating each song as a "word" and each playlist as a "sentence." However, unlike natural language, where the order of words conveys meaning, playlists do not always rely on the sequence of songs. Instead, Skip-Gram might capture valuable associations by treating all songs within a playlist as contextually related, without assuming that specific songs need to appear close to each other to share relevance.
+
 
 ### Conclusion / work in progress
 CBOW is better for Datasets with many fequent occuring words. Skip-Gram is better with many less frequent words ([Concluded here](https://iopscience.iop.org/article/10.1088/1742-6596/2634/1/012052/meta)). Still need to test what algorithm performes better or is it the case to create an own algorithm for embedding songs inside playlists.  Both algorithms work with some kind of context window to understand the focused word. This type of window looking should not apply to playlists because there is the whole list relevant.

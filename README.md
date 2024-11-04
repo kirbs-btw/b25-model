@@ -81,6 +81,8 @@ where:
 **Window Size Impact**: The parameter $c$, which controls the context window size, affects both accuracy and training time. Larger windows tend to capture broader context but increase computation time, as each word is paired with more context words for training.
 
 In the context of playlist modeling, the Skip-Gram approach can be adapted by treating each song as a "word" and each playlist as a "sentence." However, unlike natural language, where the order of words conveys meaning, playlists do not always rely on the sequence of songs. Instead, Skip-Gram might capture valuable associations by treating all songs within a playlist as contextually related, without assuming that specific songs need to appear close to each other to share relevance.
+### CBOW (Continuous-Bag-of-Songs)
+Simpler more elegant way of calculating the embeddings - secret by now
 
 
 ### Conclusion / work in progress
@@ -92,8 +94,6 @@ CBOW will be the main focuse here at
 Cleaning up the dataset for outliers to polish the accuracy of the trained model
 
 It's possible that I need to implement my own model for embedding those words of the playlist to let the context window slip.
-
-Following step would be to get the embedding algorithms working with mp3 data.
 
 
 ## Relevant Papers

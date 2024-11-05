@@ -7,3 +7,5 @@ song2vec/song2vec/submodule/__pycache__
 song2vec/song2vec/submodule/build
 song2vec/song2vec/submodule/song2vec.cp310-win_amd64.pyd
 song2vec/song2vec/submodule/python_algo_pre.py
+song2vec/song2vec/submodule/song2vec.py
+song2vec/song2vec/__pycache__

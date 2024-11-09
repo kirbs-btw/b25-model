@@ -95,6 +95,12 @@ Cleaning up the dataset for outliers to polish the accuracy of the trained model
 
 It's possible that I need to implement my own model for embedding those words of the playlist to let the context window slip.
 
+For CBOS to work i need to convert the algorithm to real c code and also optimize the operations.
+--> Tried training it with the full dataset (~1GB) after 1593min of training i needed to cancel it
+    --> starting with basic optimization and also possible to convert it all to c
+    --> rought calculation said the training should take about 1200min...
+    --> possible to throw it on some cluster idk
+
 
 ## Relevant Papers
 Zarlenga, M.E., Barbiero, P., Ciravegna, G., Marra, G., Giannini, F., Diligenti, M., Precioso, F., Melacci, S., Weller, A., Lio, P. and Jamnik, M., 2022, November. [Concept embedding models](https://hal.science/hal-03854550/). In NeurIPS 2022-36th Conference on Neural Information Processing Systems.
@@ -104,3 +110,5 @@ Xia, H., 2023, November. [Continuous-bag-of-words and Skip-gram for word vector 
 Mikolov, T., 2013. [Efficient estimation of word representations in vector space](https://www.khoury.northeastern.edu/home/vip/teach/DMcourse/4_TF_supervised/notes_slides/1301.3781.pdf). arXiv preprint arXiv:1301.3781.
 
 Behnel, S., Bradshaw, R., Citro, C., Dalcin, L., Seljebotn, D.S. and Smith, K., 2010. [Cython: The best of both worlds](https://ieeexplore.ieee.org/abstract/document/5582062). Computing in Science & Engineering, 13(2), pp.31-39.
+
+Johansson, R. and Johansson, R., 2015. [Code optimization. Numerical Python: A Practical Techniques Approach for Industry](https://link.springer.com/chapter/10.1007/978-1-4842-0553-2_19), pp.453-470.

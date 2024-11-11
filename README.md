@@ -101,6 +101,13 @@ For CBOS to work i need to convert the algorithm to real c code and also optimiz
     --> rought calculation said the training should take about 1200min...
     --> possible to throw it on some cluster idk
 
+## notes
+It is possible there is an issue with the c code or anysthing else...   
+    --> 100 playlists (all ~40 Songs long) train for 1.5 min
+    --> 2000 playlists still training by now 446min... 
+Possible to speed up the training by about 17x by pushing an inner loop out in a way
+Found an other speed up with memory management about 30x but less exact... 
+Still need to find a way to let the values stay only between [-1, 1]
 
 ## Relevant Papers
 Zarlenga, M.E., Barbiero, P., Ciravegna, G., Marra, G., Giannini, F., Diligenti, M., Precioso, F., Melacci, S., Weller, A., Lio, P. and Jamnik, M., 2022, November. [Concept embedding models](https://hal.science/hal-03854550/). In NeurIPS 2022-36th Conference on Neural Information Processing Systems.

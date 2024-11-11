@@ -14,3 +14,6 @@ song2vec/song2vec/submodule/__init__.py
 song2vec/song2vec/submodule/setup.py
 song2vec/song2vec/submodule/song2vec.py
 storage
+song2vec/build
+song2vec/song2vec.egg-info
+notebooks/algo_testing

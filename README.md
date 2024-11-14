@@ -1,4 +1,4 @@
-# b25
+# Embedding Songs in Playlist Contexts: Adapting Word Embedding Techniques for Music Recommendation Systems
 
 ## General 
 Training a standard word embedding model involves exposing it to a large corpus of sentences, allowing it to learn the semantic relationships between words by analyzing how they co-occur within sentence structures. This process relies on the distributional hypothesis, which suggests that words appearing in similar contexts tend to have similar meanings.
@@ -17,16 +17,18 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 
 ### Model Evaluation Report
 
-| Model              | Vector Size | Window | Min Count | Training Algorithm | NS Exponent | Accuracy  | Accuracy (title+artist split) | 
-|--------------------|-------------|--------|-----------|----|-------------|-----------|-----------|
-| b25-sn-v50         | 50          | 5      | 1         | CBOW  | -           | 0.2607    | 0.3672   |
-| b25-sn-v256-a      | 256         | 5      | 1         | CBOW  | -           | 0.2809    | 0.3669    |
-| b25-sn-v256-b      | 256         | 10     | 1         | CBOW  | -           | 0.3198    | 0.4333   |
-| b25-sn-v256-c      | 256         | 20     | 1         | CBOW  | -           | 0.3953    | 0.4427    |
-| b25-sn-v256-d      | 256         | 20     | 1         | Skip-Gram  | 0.0         | 0.4845    | 0.6513    |
-| b25-sn-v512-a      | 512         | 100    | 1         | CBOW  | -           | 0.5000    | 0.5703    |
-| b25-sn-v512-b      | 512         | 100    | 1         | Skip-Gram  | 0.0           | 0.6721     | 0.7739    |
-| b25-sn-v512-c      | 512         | 100    | 1         | CBOS  | -           | N/A | N/A |
+
+| Model              | Vector Size | Window | Min Count | Epoch | Learning Rate (Alpha) | Training Algorithm | NS Exponent | Accuracy (title+artist split) | 
+|--------------------|-------------|--------|-----------|-------|------------------------|--------------------|-------------|-------------------------------|
+| b25-sn-v50         | 50          | 5      | 1         | 5     | 0.025                      | CBOW               | -              | 0.3672                        |
+| b25-sn-v256-a      | 256         | 5      | 1         | 5     | 0.025                      | CBOW               | -           | 0.3669                        |
+| b25-sn-v256-b      | 256         | 10     | 1         | 5     | 0.025                      | CBOW               | -            | 0.4333                        |
+| b25-sn-v256-c      | 256         | 20     | 1         | 5     | 0.025                      | CBOW               | -               | 0.4427                        |
+| b25-sn-v256-d      | 256         | 20     | 1         | 5     | 0.025                      | Skip-Gram          | 0.0             | 0.6513                        |
+| b25-sn-v512-a      | 512         | 100    | 1         | 5     | 0.025                      | CBOW               | -           | 0.5703                        |
+| b25-sn-v512-b      | 512         | 100    | 1         | 5     | 0.025                      | Skip-Gram          | 0.0             | 0.7739                        |
+| b25-sn-v512-c      | 512         | inf   | 1         | 15     | 0.015                    | CBOS               | -             | 0.2196                         |
+| b25-sn-v512-d      | 512         | inf   | 1         | 15     | 0.025                    | CBOS               | -             | 0.2362                         |
 
 
 ### General Observations and Future Steps

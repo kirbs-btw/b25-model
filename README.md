@@ -11,8 +11,8 @@ Many word embedding algorithms, such as Word2Vec, focus on local context windows
 
 ## Methodology
 
-## Training Algorithms
-### CBOW (Continuous-Bag-of-Words)
+### Training Algorithms
+#### CBOW (Continuous-Bag-of-Words)
 
 The Continuous-Bag-of-Words (CBOW) model aims to predict a target word, known as the *center word*, based on a given context of surrounding words. This model operates under the distributional hypothesis, which suggests that words appearing in similar contexts share similar meanings. Consequently, words located closely in a text are assumed to be highly similar, whereas words that are far apart are often dissimilar in meaning.
 
@@ -33,7 +33,7 @@ $$
 By training on these conditional probabilities, CBOW creates dense vector embeddings that reflect semantic similarities between words based on their contexts.
 
 
-### Skip-Gram
+#### Skip-Gram
 
 The Skip-Gram model, an alternative to CBOW, is designed to predict the surrounding context words based on a given center word. This approach aims to maximize the probability of observing neighboring words, given a target word. Formally, the Skip-Gram model seeks to maximize the following objective function:
 
@@ -59,14 +59,14 @@ where:
 **Window Size Impact**: The parameter $c$, which controls the context window size, affects both accuracy and training time. Larger windows tend to capture broader context but increase computation time, as each word is paired with more context words for training.
 
 In the context of playlist modeling, the Skip-Gram approach can be adapted by treating each song as a "word" and each playlist as a "sentence." However, unlike natural language, where the order of words conveys meaning, playlists do not always rely on the sequence of songs. Instead, Skip-Gram might capture valuable associations by treating all songs within a playlist as contextually related, without assuming that specific songs need to appear close to each other to share relevance.
-### CBOW (Continuous-Bag-of-Songs)
+#### CBOS (Continuous-Bag-of-Songs)
 Simpler more elegant way of calculating the embeddings - secret by now
 
 ### Data
 The base dataset is from [kaggle](https://www.kaggle.com/datasets/andrewmvd/spotify-playlists)
 
 ### Model Validation
-The dataset is divided into two sets: training and testing, to mitigate overfitting. The model evaluation involves selecting a song from a playlist and allowing the model to predict the next song. If the predicted song is present in the same playlist, the model is marked as correct. Currently, the model is not evaluated on its ability to understand the context or sequence of songs, which represents a potential future testing phase. In essence, the model receives one song as input and suggests the next best matching song based on its learned associations.
+The dataset is divided into two sets: training and testing, to mitigate overfitting. The model evaluation involves selecting a song from a playlist and allowing the model to predict the next song. If the predicted song is present in the same playlist, the prediciton is marked as correct. Currently, the model is not evaluated on its ability to understand the context or sequence of songs, which represents a potential future testing phase. In essence, the model receives one song as input and suggests the next best matching song based on its learned associations.
 
 ## Results
 ### Model Evaluation Report

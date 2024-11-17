@@ -11,6 +11,13 @@ Many word embedding algorithms, such as Word2Vec, focus on local context windows
 
 ## Methodology
 
+### Data Preprocessing
+The dataset utilized in this study originates from a [Kaggle](https://www.kaggle.com/datasets/andrewmvd/spotify-playlists) repository, encompassing approximately 1GB of Spotify playlists. Preprocessing the data involved several critical steps to ensure its quality and usability for model training.
+
+Initially, the dataset was cleaned to address common data anomalies, including outliers, missing values, and erroneous entries. Subsequently, data augmentation was performed by randomly rearranging the positions of songs within playlists, effectively expanding the dataset and enhancing its diversity. This step was motivated by the need to expose the model to a broader range of playlist structures, thereby increasing its robustness and generalization capability.
+
+The processed dataset was then partitioned into two subsets: 90% of the data was allocated for training, while the remaining 10% was reserved for testing. This stratified split ensures a reliable evaluation of model performance while minimizing the risk of overfitting.
+
 ### Training Algorithms
 #### CBOW (Continuous-Bag-of-Words)
 
@@ -61,9 +68,6 @@ where:
 In the context of playlist modeling, the Skip-Gram approach can be adapted by treating each song as a "word" and each playlist as a "sentence." However, unlike natural language, where the order of words conveys meaning, playlists do not always rely on the sequence of songs. Instead, Skip-Gram might capture valuable associations by treating all songs within a playlist as contextually related, without assuming that specific songs need to appear close to each other to share relevance.
 #### CBOS (Continuous-Bag-of-Songs)
 Simpler more elegant way of calculating the embeddings - secret by now
-
-### Data
-The base dataset is from [kaggle](https://www.kaggle.com/datasets/andrewmvd/spotify-playlists)
 
 ### Model Validation
 The dataset is divided into two sets: training and testing, to mitigate overfitting. The model evaluation involves selecting a song from a playlist and allowing the model to predict the next song. If the predicted song is present in the same playlist, the prediciton is marked as correct. Currently, the model is not evaluated on its ability to understand the context or sequence of songs, which represents a potential future testing phase. In essence, the model receives one song as input and suggests the next best matching song based on its learned associations.

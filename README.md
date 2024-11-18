@@ -9,6 +9,8 @@ Many word embedding algorithms, such as Word2Vec, focus on local context windows
 
 ## Related work
 
+The concept of modeling semantic relationships between entities in their context is well-established, particularly in natural language processing (NLP) [Lezama-Sánchez, 2022]. Recent advancements in this area [Chiang et al., 2020] have highlighted its applicability beyond text analysis. For instance, the principles of NLP can be adapted to playlists, where playlists provide the context, and songs represent the entities. By treating playlists as analogous to sentences and songs as words, NLP techniques like word embeddings can be repurposed, offering novel approaches for modeling relationships in music recommendation systems.
+
 ## Methodology
 
 ### Data Preprocessing
@@ -102,6 +104,10 @@ Mikolov, T., 2013. [Efficient estimation of word representations in vector space
 Behnel, S., Bradshaw, R., Citro, C., Dalcin, L., Seljebotn, D.S. and Smith, K., 2010. [Cython: The best of both worlds](https://ieeexplore.ieee.org/abstract/document/5582062). Computing in Science & Engineering, 13(2), pp.31-39.
 
 Johansson, R. and Johansson, R., 2015. [Code optimization. Numerical Python: A Practical Techniques Approach for Industry](https://link.springer.com/chapter/10.1007/978-1-4842-0553-2_19), pp.453-470.
+
+Lezama-Sánchez, A.L., Tovar Vidal, M. and Reyes-Ortiz, J.A., 2022. An approach based on semantic relationship embeddings for text classification. Mathematics, 10(21), p.4161.
+
+Chiang, H.Y., Camacho-Collados, J. and Pardos, Z., 2020, November. Understanding the source of semantic regularities in word embeddings. In Proceedings of the 24th Conference on Computational Natural Language Learning (pp. 119-131).
 
 ### General Observations and Future Steps
 - **Need for Larger Test Sets**: All models should be tested against a much larger set of playlists, as testing on only 250 playlists may not provide sufficient variability and insight into model performance. Thats about 10.000 songs

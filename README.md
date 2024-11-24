@@ -90,6 +90,30 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 | b25-sn-v512-d      | 512         | inf   | 1         | 15     | 0.025                    | CBOS-d               | -             | -                        |
 
 ## Discussion 
+**Interpretation of Results**
+
+What do the results mean?
+Unexpected findings ? 
+
+**Comparison with Prior Work**
+How do your results align with existing studies?
+
+Contribution to the field?
+
+**Practical Implications**
+How can your findings be applied?
+
+**Theoretical Implications**
+
+**Limitations**
+What were the challenges or constraints?
+
+**Impact of limitations**
+
+**Future Work**
+What are the next steps?
+
+**Closing Remarks**
 
 ## Conclusion 
 

@@ -101,9 +101,14 @@ How do your results align with existing studies?
 Contribution to the field?
 
 **Practical Implications**
-How can your findings be applied?
+The proposed approaches hold significant potential for application in the music industry, particularly in enhancing song recommendation systems. By leveraging these methods, personalized playlists could be tailored to align with individual user preferences, offering a highly customized listening experience. Optimization strategies may include clustering users with similar music tastes to reduce computational costs, allowing for fewer but more efficient models. Additionally, pretrained models could serve as a foundation for fine-tuning with user-specific playlists, enabling rapid adaptation to individual preferences.
+
+The scalability of such systems provides room for innovation, such as employing transfer learning to improve recommendations across diverse user groups. Beyond user personalization, these methods could streamline the design of dynamic, mood-based playlists or assist in uncovering latent musical preferences in underrepresented genres. The interplay of optimization techniques and algorithmic design opens new pathways for exploration in both consumer and business-focused applications of music technology.
 
 **Theoretical Implications**
+On a theoretical level, this work suggests a broader applicability of embedding-based models beyond their traditional use in natural language processing. While the focus here is on music recommendation, similar algorithms could be adapted for fields where relationships between entities need contextual representation. For instance, cryptographic applications could explore embeddings to identify patterns in data encryption processes, while interdisciplinary fields like social network analysis may utilize these techniques to model interactions and relationships.
+
+Furthermore, embedding algorithms may find utility in biological data analysis, where they could uncover relationships in genetic sequences, protein interactions, or ecological networks. The theoretical foundation of these algorithms—rooted in capturing latent semantic relationships—can drive advancements in diverse disciplines, providing a framework for understanding complex systems. Future research should systematically explore these domains to delineate the full extent of their applicability and limitations.
 
 **Limitations**
 What were the challenges or constraints?

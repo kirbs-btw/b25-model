@@ -109,14 +109,14 @@ On a theoretical level, this work suggests a broader applicability of embedding-
 
 Furthermore, embedding algorithms may find utility in biological data analysis, where they could uncover relationships in genetic sequences, protein interactions, or ecological networks. The theoretical foundation of these algorithms—rooted in capturing latent semantic relationships—can drive advancements in diverse disciplines, providing a framework for understanding complex systems. Future research should systematically explore these domains to delineate the full extent of their applicability and limitations.
 
-Obtaining sufficient data to ensure coverage for every song within the dataset has proven to be a significant challenge. Moreover, song recommendation is inherently subjective and cannot be fully generalized due to the diverse nature of individual preferences. Consequently, the evaluation of model performance should incorporate additional metrics, such as validation through representative sampling (Stichproben), to improve reliability and robustness.
+Obtaining sufficient data to ensure coverage for every song within the dataset has proven to be a significant challenge. Moreover, song recommendation is inherently subjective and cannot be fully generalized due to the diverse nature of individual preferences. Consequently, the evaluation of model performance should incorporate additional metrics, such as validation through representative sampling, to improve reliability and robustness.
 
 The computational demands of training a unique model for each user render this approach impractical, especially considering the substantial time required for model training. Furthermore, the memory complexity of each model scales as $O(n)$, where $n$ represents the number of songs incorporated in the model. This scaling limitation underscores the need for optimization strategies in both memory management and computational efficiency to handle the growth in dataset size and maintain feasible training times.
 
 **Impact of limitations**
 
 **Future Work**
-What are the next steps?
+Future work will focus on applying the insights from this study to expand the potential use cases of the proposed models, including personalized playlist recommendations, dynamic playlist generation, and cross-domain applications such as video or podcast suggestions. Additionally, optimizing the algorithms is critical to improving memory efficiency and computational performance, which will involve addressing bottlenecks in the training process, refining data handling to reduce redundancy, and implementing lower-level programming optimizations. These efforts aim to ensure scalability and robustness for handling larger datasets while maintaining or improving accuracy and speed.
 
 **Closing Remarks**
 
@@ -165,4 +165,3 @@ It is possible there is an issue with the c code or anysthing else...
     --> 2000 playlists still training by now 446min... 
 Possible to speed up the training by about 17x by pushing an inner loop out in a way
 Found an other speed up with memory management about 30x but less exact... 
-Still need to find a way to let the values stay only between [-1, 1]

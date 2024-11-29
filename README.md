@@ -96,10 +96,11 @@ What do the results mean?
 Unexpected findings ? 
 
 **Comparison with Prior Work**
-How do your results align with existing studies?
+The results of the study show that while genre-based clustering remains prevalent in playlists, deviations from this norm often arise. These deviations highlight the influence of broader cultural and social phenomena on playlist composition. Specifically, subclusters within the embeddings are more aligned with emerging trends, significant social events, and references to popular media such as movies and TV shows, rather than strictly adhering to genre boundaries. This observation aligns with existing research suggesting that user-generated content, including playlists, reflects contextual and cultural dimensions, thereby offering nuanced insights beyond traditional genre categorizations.
+_-_-_-_-_ 
+
 
 Contribution to the field?
-
 
 The proposed approaches hold significant potential for application in the music industry, particularly in enhancing song recommendation systems. By leveraging these methods, personalized playlists could be tailored to align with individual user preferences, offering a highly customized listening experience. Optimization strategies may include clustering users with similar music tastes to reduce computational costs, allowing for fewer but more efficient models. Additionally, pretrained models could serve as a foundation for fine-tuning with user-specific playlists, enabling rapid adaptation to individual preferences.
 

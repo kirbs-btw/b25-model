@@ -97,10 +97,14 @@ Unexpected findings ?
 
 **Comparison with Prior Work**
 The results of the study show that while genre-based clustering remains prevalent in playlists, deviations from this norm often arise. These deviations highlight the influence of broader cultural and social phenomena on playlist composition. Specifically, subclusters within the embeddings are more aligned with emerging trends, significant social events, and references to popular media such as movies and TV shows, rather than strictly adhering to genre boundaries. This observation aligns with existing research suggesting that user-generated content, including playlists, reflects contextual and cultural dimensions, thereby offering nuanced insights beyond traditional genre categorizations.
-_-_-_-_-_ 
 
 
-Contribution to the field?
+This research advances the application of classical vectorization algorithms by extending their usage into non-traditional domains, specifically music recommendation systems. In addition to adapting established methodologies like CBOW (Continuous Bag of Words) and Skip-Gram for embedding songs within playlists, the study introduces a novel algorithm, termed Entity Clustering (EC). This algorithm represents a contribution to the general field of vectorization by refining the representation of semantic relationships between entities.
+
+The EC algorithm is implemented within the b25 model, which is designed to optimize the embedding of songs based on their contextual co-inclusion within playlists rather than their sequential relationships. The approach builds on the principles of contextual embedding but diverges from traditional proximity-based models to account for the unordered and association-driven nature of playlist data.
+
+This contribution applying established algorithms in a new domain and introducing a vectorization method demonstrates the adaptability of vectorization principles and highlights their potential for cross-domain applicability. Future work aims to further refine the EC algorithm, optimize its implementation for computational efficiency, and explore its broader applicability to contexts such as dynamic media recommendations and relational analysis in complex systems.
+
 
 The proposed approaches hold significant potential for application in the music industry, particularly in enhancing song recommendation systems. By leveraging these methods, personalized playlists could be tailored to align with individual user preferences, offering a highly customized listening experience. Optimization strategies may include clustering users with similar music tastes to reduce computational costs, allowing for fewer but more efficient models. Additionally, pretrained models could serve as a foundation for fine-tuning with user-specific playlists, enabling rapid adaptation to individual preferences.
 

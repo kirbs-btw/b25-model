@@ -94,6 +94,7 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 
 What do the results mean?
 Unexpected findings ? 
+The first iteration of the newly developed algorithm for song embedding did not align with the expectation. It was designed to fit the reduced requirements of embedding songs. More iterations needed to be done, still there is some data collected about this topic so the next one does no need to do that...
 
 **Comparison with Prior Work**
 The results of the study show that while genre-based clustering remains prevalent in playlists, deviations from this norm often arise. These deviations highlight the influence of broader cultural and social phenomena on playlist composition. Specifically, subclusters within the embeddings are more aligned with emerging trends, significant social events, and references to popular media such as movies and TV shows, rather than strictly adhering to genre boundaries. This observation aligns with existing research suggesting that user-generated content, including playlists, reflects contextual and cultural dimensions, thereby offering nuanced insights beyond traditional genre categorizations.

@@ -171,3 +171,24 @@ It is possible there is an issue with the c code or anysthing else...
     --> 2000 playlists still training by now 446min... 
 Possible to speed up the training by about 17x by pushing an inner loop out in a way
 Found an other speed up with memory management about 30x but less exact... 
+
+Still need to test other variations of embedding algorithms to use: 
+Item2Vec: An adaptation of Word2Vec for recommendation systems, focusing on item co-occurrence within user sessions or baskets.
+Graph Embedding Methods: Techniques like Node2Vec or DeepWalk can capture complex relationships by modeling playlists as graphs.
+Matrix Factorization: Used in collaborative filtering to uncover latent factors in user-item interactions.
+GloVe (Global Vectors): Combines global matrix factorization and local context methods to capture global co-occurrence statistics.
+
+Designing a Custom Model:
+
+Global Co-occurrence Focus: Shift from local context windows to capturing global co-occurrence patterns of songs within playlists.
+
+Validation Techniques:
+Employ k-fold cross-validation to ensure the model generalizes well to unseen data.
+Monitor for overfitting by comparing training and validation losses.
+
+Evaluation Metrics:
+
+Comprehensive Metrics:
+Beyond accuracy, use Precision@K, Recall@K, Mean Reciprocal Rank (MRR), and Normalized Discounted Cumulative Gain (NDCG).
+A/B Testing:
+If possible, conduct user studies or live A/B tests to assess recommendation quality in real-world scenarios.

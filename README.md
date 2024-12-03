@@ -173,8 +173,7 @@ Possible to speed up the training by about 17x by pushing an inner loop out in a
 Found an other speed up with memory management about 30x but less exact... 
 
 Still need to test other variations of embedding algorithms to use: 
-Item2Vec: An adaptation of Word2Vec for recommendation systems, focusing on item co-occurrence within user sessions or baskets.
-Graph Embedding Methods: Techniques like Node2Vec or DeepWalk can capture complex relationships by modeling playlists as graphs.
+Graph Embedding Methods --> look into if it has implication
 Matrix Factorization: Used in collaborative filtering to uncover latent factors in user-item interactions.
 GloVe (Global Vectors): Combines global matrix factorization and local context methods to capture global co-occurrence statistics.
 

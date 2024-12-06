@@ -17,3 +17,20 @@ storage
 song2vec/build
 song2vec/song2vec.egg-info
 notebooks/algo_testing
+.glove-venv
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+.env/
+
+# Logs and debug output
+*.log
+
+# Byte-compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Cache directories
+__pycache__/
+*.pytest_cache/

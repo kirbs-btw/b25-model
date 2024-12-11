@@ -191,3 +191,6 @@ Comprehensive Metrics:
 Beyond accuracy, use Precision@K, Recall@K, Mean Reciprocal Rank (MRR), and Normalized Discounted Cumulative Gain (NDCG).
 A/B Testing:
 If possible, conduct user studies or live A/B tests to assess recommendation quality in real-world scenarios.
+
+The new algorithme with parts of glove and CBOW in combination is not showing realy good results... 
+The training for the full size model would approx take 7 Days... 

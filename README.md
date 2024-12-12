@@ -68,6 +68,12 @@ where:
 **Window Size Impact**: The parameter $c$, which controls the context window size, affects both accuracy and training time. Larger windows tend to capture broader context but increase computation time, as each word is paired with more context words for training.
 
 In the context of playlist modeling, the Skip-Gram approach can be adapted by treating each song as a "word" and each playlist as a "sentence." However, unlike natural language, where the order of words conveys meaning, playlists do not always rely on the sequence of songs. Instead, Skip-Gram might capture valuable associations by treating all songs within a playlist as contextually related, without assuming that specific songs need to appear close to each other to share relevance.
+
+#### GloVe-Inspired Co-Occurrence Embedding
+
+Unlike CBOW and Skip-Gram, which depend on local windows of proximity to infer semantic relationships, the GloVe-like approach adopted here leverages global co-occurrence statistics drawn from entire playlists. In this adaptation, each playlist is treated as a "document," and pairs of songs that co-occur frequently within these playlists are more likely to be semantically related. To implement this, the algorithm constructs a global co-occurrence matrix, capturing how often any two songs appear together, regardless of their relative positions. Subsequently, it employs a weighted least-squares objective that aligns the inner product of song embeddings with the logarithm of their observed co-occurrence counts. Over several training epochs, the embeddings and bias terms are iteratively updated to minimize the discrepancy between the modeled and actual co-occurrences, resulting in dense vectors that reflect broader contextual relationships between songs. This method complements more localized approaches by emphasizing the overall structure of the data—enabling richer, more holistic representations that could potentially improve recommendation quality.
+
+
 #### CBOS (Continuous-Bag-of-Songs)
 Simpler more elegant way of calculating the embeddings - secret by now
 

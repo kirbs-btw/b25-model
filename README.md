@@ -94,6 +94,9 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 | b25-sn-v512-c      | 512         | inf   | 1         | 15     | 0.015                    | CBOS               | -             | 0.2196                         |
 | b25-sn-v512-d      | 512         | inf   | 1         | 15     | 0.025                    | CBOS               | -             | 0.2362                         |
 | b25-sn-v512-e      | 512         | inf   | 1         | 15     | 0.025                    | CBOS-d               | -             | 0.0528                        |
+| b25-sn-v512-e*      | 512         | inf   | 1         | 15     | 0.025                    | Glove-a               | -             | 0.0095                       |
+
+\* trained on 1000 Playlists
 
 ## Discussion 
 **Interpretation of Results**

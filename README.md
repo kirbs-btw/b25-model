@@ -207,3 +207,7 @@ The training for the full size model would approx take 7 Days...
 Started training the new model with very little hope to get better results. Training will take abt 2 Days with the Optimized algorithm.
 
 Model Training crashed after on day will need to revisisit things like datacleaning and find a new approche on traingni the model. Glove did not have good stats to start with... 
+
+Could also implement Precision@K for a testing metric
+
+Talk about what randomguessing would be the number to set a persepctive for the results

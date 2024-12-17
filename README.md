@@ -82,7 +82,7 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 
 ## Results
 ### Model Evaluation Report
-| Model              | Vector Size | Window | Min Count | Epoch | Learning Rate (Alpha) | Training Algorithm | NS Exponent | Accuracy (title+artist split) | 
+| Model              | Vector Size | Window | Min Count | Epoch | Learning Rate (Alpha) | Training Algorithm | NS Exponent | Precision@1 | 
 |--------------------|-------------|--------|-----------|-------|------------------------|--------------------|-------------|-------------------------------|
 | b25-sn-v50         | 50          | 5      | 1         | 5     | 0.025                      | CBOW               | -              | 0.3672                        |
 | b25-sn-v256-a      | 256         | 5      | 1         | 5     | 0.025                      | CBOW               | -           | 0.3669                        |
@@ -208,6 +208,6 @@ Started training the new model with very little hope to get better results. Trai
 
 Model Training crashed after on day will need to revisisit things like datacleaning and find a new approche on traingni the model. Glove did not have good stats to start with... 
 
-Could also implement Precision@K for a testing metric
+Could also implement Precision@K, Recall@K for testing
 
 Talk about what randomguessing would be the number to set a persepctive for the results

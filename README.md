@@ -74,8 +74,11 @@ In the context of playlist modeling, the Skip-Gram approach can be adapted by tr
 Unlike CBOW and Skip-Gram, which depend on local windows of proximity to infer semantic relationships, the GloVe-like approach adopted here leverages global co-occurrence statistics drawn from entire playlists. In this adaptation, each playlist is treated as a "document," and pairs of songs that co-occur frequently within these playlists are more likely to be semantically related. To implement this, the algorithm constructs a global co-occurrence matrix, capturing how often any two songs appear together, regardless of their relative positions. Subsequently, it employs a weighted least-squares objective that aligns the inner product of song embeddings with the logarithm of their observed co-occurrence counts. Over several training epochs, the embeddings and bias terms are iteratively updated to minimize the discrepancy between the modeled and actual co-occurrences, resulting in dense vectors that reflect broader contextual relationships between songs. This method complements more localized approaches by emphasizing the overall structure of the data—enabling richer, more holistic representations that could potentially improve recommendation quality.
 
 
-#### CBOS (Continuous-Bag-of-Songs)
-Simpler more elegant way of calculating the embeddings - secret by now
+#### CBOE (Continuous-Bag-of-Entities)
+The Continuous-Bag-of-Entities (CBOE) model can be viewed as a generalized adaptation of the Continuous-Bag-of-Words (CBOW) framework. Rather than constraining the model to a fixed, weighted context window, CBOE removes explicit context weighting and introduces an effectively unbounded context size. This modification makes the approach more suitable for tasks where the collective presence of entities holds greater importance than their sequential arrangement—such as songs appearing together in a playlist. By focusing on co-occurrence within entire sets of entities, CBOE aims to capture higher-level semantic relationships, thereby extending the applicability of traditional word embedding principles to broader domains like music recommendation.
+
+#### ECP (Entitie-Cluster-Push)
+
 
 ### Model Validation
 The dataset is divided into two sets: training and testing, to mitigate overfitting. The model evaluation involves selecting a song from a playlist and allowing the model to predict the next song. If the predicted song is present in the same playlist, the prediciton is marked as correct. Currently, the model is not evaluated on its ability to understand the context or sequence of songs, which represents a potential future testing phase. In essence, the model receives one song as input and suggests the next best matching song based on its learned associations.
@@ -91,9 +94,9 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 | b25-sn-v256-d      | 256         | 20     | 1         | 5     | 0.025                      | Skip-Gram          | 0.0             | 0.6513                        |0.5578                       |
 | b25-sn-v512-a      | 512         | 100    | 1         | 5     | 0.025                      | CBOW               | -           | 0.5703                        | 0.4709                       |
 | b25-sn-v512-b      | 512         | 100    | 1         | 5     | 0.025                      | Skip-Gram          | 0.0             | 0.7739                        |0.6639                       |
-| b25-sn-v512-c      | 512         | inf   | 1         | 15     | 0.015                    | CBOS               | -             | 0.2196                         |N/A                       |
-| b25-sn-v512-d      | 512         | inf   | 1         | 15     | 0.025                    | CBOS               | -             | 0.2362                         |N/A                       |
-| b25-sn-v512-e      | 512         | inf   | 1         | 15     | 0.025                    | CBOS-d               | -             | 0.0528                        |N/A                       |
+| b25-sn-v512-c      | 512         | inf   | 1         | 15     | 0.015                    | ECP               | -             | 0.2196                         |N/A                       |
+| b25-sn-v512-d      | 512         | inf   | 1         | 15     | 0.025                    | ECP               | -             | 0.2362                         |N/A                       |
+| b25-sn-v512-e      | 512         | inf   | 1         | 15     | 0.025                    | ECP-d               | -             | 0.0528                        |N/A                       |
 | b25-sn-v512-e*      | 512         | inf   | 1         | 15     | 0.025                    | Glove-a               | -             | 0.0095                       |N/A                       |
 
 \* trained on 1000 Playlists

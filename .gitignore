@@ -31,6 +31,8 @@ notebooks/algo_testing
 *.pyo
 *.pyd
 
+paper/*
+
 # Cache directories
 __pycache__/
 *.pytest_cache/

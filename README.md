@@ -77,6 +77,9 @@ Unlike CBOW and Skip-Gram, which depend on local windows of proximity to infer s
 #### CBOE (Continuous-Bag-of-Entities)
 The Continuous-Bag-of-Entities (CBOE) model can be viewed as a generalized adaptation of the Continuous-Bag-of-Words (CBOW) framework. Rather than constraining the model to a fixed, weighted context window, CBOE removes explicit context weighting and introduces an effectively unbounded context size. This modification makes the approach more suitable for tasks where the collective presence of entities holds greater importance than their sequential arrangement—such as songs appearing together in a playlist. By focusing on co-occurrence within entire sets of entities, CBOE aims to capture higher-level semantic relationships, thereby extending the applicability of traditional word embedding principles to broader domains like music recommendation.
 
+#### Skipgram - without weight
+The skipgram approche is build to cluster words in a vector space and find the semantic meaning with a context window. For the entity relation/meaning usecase the context window can be infinite and also the weight of the entities around the viewed one does not need to be regarded. Therefore propsing a modified version of the algorithm for training a entity semantic meaning model for usecases not regarding sequential arrangement and context windows.
+
 #### ECP (Entitie-Cluster-Push)
 
 

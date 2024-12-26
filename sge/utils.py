@@ -7,13 +7,9 @@ import math
 class SkipGramEntity2Vec:
     def __init__(
         self,
-        sentences,
+        tokenized_data,
         vector_size=2048,
         min_count=1,
-        window=100,  # In diesem Beispiel ignorieren wir das 'Fenster' und verwenden den ganzen Satz.
-        workers=1,  # Wird hier nicht genutzt (naive Implementierung)
-        sg=1,  # Skip-Gram (der Vollständigkeit halber, nutzen wir nicht dynamisch)
-        ns_exponent=0.0,  # Ebenfalls nur für die Schnittstelle, hier ungenutzt
         epochs=5,
         learning_rate=0.01,
     ):
@@ -33,12 +29,11 @@ class SkipGramEntity2Vec:
         """
         self.vector_size = vector_size
         self.min_count = min_count
-        self.window = window
         self.epochs = epochs
         self.lr = learning_rate
 
         # 1) Wortschatz aufbauen
-        self._build_vocab(sentences)
+        self._build_vocab(tokenized_data)
 
         # 2) Gewichte initialisieren
         #    - W_in: Embeddings für Input (target-Wort)
@@ -51,7 +46,7 @@ class SkipGramEntity2Vec:
         ) / vector_size
 
         # 3) Modell trainieren (Skip-Gram)
-        self._train(sentences)
+        self._train(tokenized_data)
 
     def _build_vocab(self, sentences):
         """
@@ -72,10 +67,6 @@ class SkipGramEntity2Vec:
         self.idx_to_word = {i: w for w, i in self.word_to_idx.items()}
 
     def _train(self, sentences):
-        """
-        Führe das Skip-Gram-Training durch.
-        Wir nehmen für jedes Zielwort im Satz alle anderen Wörter im Satz als Kontext.
-        """
         for epoch in range(self.epochs):
             total_loss = 0.0
             for sent in sentences:
@@ -217,12 +208,9 @@ if __name__ == "__main__":
 
     # Initialisierung und Training
     model = SkipGramEntity2Vec(
-        sentences=train_dataset,
+        tokenized_data=train_dataset,
         vector_size=8,
         min_count=1,
-        window=100,
-        sg=1,
-        ns_exponent=0.0,
         epochs=10,
         learning_rate=0.01,
     )

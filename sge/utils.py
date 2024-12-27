@@ -19,11 +19,7 @@ class SkipGramEntity2Vec:
         Argumente:
             sentences (List[List[str]]): Trainingsdaten (Liste von Listen von Wörtern/Entitäten).
             vector_size (int): Dimension der Embeddings.
-            min_count (int): Ignoriere Wörter/Entitäten mit Häufigkeit < min_count.
-            window (int): Kontextfenster; hier nur als Platzhalter, da wir immer den gesamten Satz als Kontext nutzen.
-            workers (int): Anzahl Worker-Threads (in dieser naiven Version ungenutzt).
-            sg (int): Ob Skip-Gram-Training genutzt wird (1) oder CBOW (0); hier immer 1 (Skip-Gram).
-            ns_exponent (float): Parameter für Negative Sampling (unser Beispiel verwendet kein NS).
+            min_count (int): Ignoriere Wörter/Entitäten mit Häufigkeit < min_count..
             epochs (int): Anzahl Epochen.
             learning_rate (float): Lernrate.
         """
@@ -206,7 +202,6 @@ if __name__ == "__main__":
         ["man", "bites", "dog"],
     ]
 
-    # Initialisierung und Training
     model = SkipGramEntity2Vec(
         tokenized_data=train_dataset,
         vector_size=8,
@@ -215,12 +210,10 @@ if __name__ == "__main__":
         learning_rate=0.01,
     )
 
-    # Test: nächste Nachbarn
     print("\nNearest to 'john':", model.nearest("john", k=2))
     print("Nearest to 'dog':", model.nearest("dog", k=2))
 
-    # Speichern & Laden
-    model.save("demo_skipgram_model.pkl")
+    model.save("tmp/demo_skipgram_model.pkl")
     loaded_model = SkipGramEntity2Vec.load("demo_skipgram_model.pkl")
 
     print(

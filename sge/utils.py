@@ -53,12 +53,13 @@ class SkipGramEntity2Vec:
         for sent in sentences:
             word_counts.update(sent)
 
-        # Filtere Wörter unterhalb von min_count
+        # filter words sub min count
         self.vocab = [w for w, c in word_counts.items() if c >= self.min_count]
-        # Für Reproduzierbarkeit sortieren (optional)
+
+        # (optional) result reproduction
         self.vocab = sorted(self.vocab)
 
-        # Mapping Wörter <-> IDs
+        # entity <-> id mapping
         self.word_to_idx = {w: i for i, w in enumerate(self.vocab)}
         self.idx_to_word = {i: w for w, i in self.word_to_idx.items()}
 

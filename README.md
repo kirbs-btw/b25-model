@@ -80,7 +80,38 @@ The Continuous-Bag-of-Entities (CBOE) model can be viewed as a generalized adapt
 #### Skipgram (SGE)
 The skipgram approche is build to cluster words in a vector space and find the semantic meaning with a context window. For the entity relation/meaning usecase the context window can be infinite and also the weight of the entities around the viewed one does not need to be regarded. Therefore propsing a modified version of the algorithm for training a entity semantic meaning model for usecases not regarding sequential arrangement and context windows.
 
-#### ECP (Entitie-Cluster-Push)
+#### Entity Cluster Push (ECP)
+
+The Entity Cluster Push (ECP) algorithm is a simplified embedding training technique inspired by the Continuous-Bag-of-Words (CBOW) model, tailored for scenarios involving clustered entities instead of sequential data. ECP operates on clusters of entities, treating each cluster as a context, and aims to refine the vector representations of individual entities by optimizing their alignment with the centroid of their respective clusters.
+
+For a given cluster of entities $\{e_1, e_2, \ldots, e_n\}$, the algorithm first computes the aggregate "base vector" $\mathbf{b}$ as the sum of all entity vectors:
+
+$$
+\mathbf{b} = \sum_{i=1}^{n} \mathbf{v}_{e_i}
+$$
+
+where $\mathbf{v}_{e_i}$ is the vector representation of entity $e_i$. To refine the embedding of an entity $e_k$, the algorithm computes a *context vector* $\mathbf{c}_{e_k}$ by removing $\mathbf{v}_{e_k}$ from the base vector and normalizing by the number of other entities in the cluster:
+
+$$
+\mathbf{c}_{e_k} = \frac{\mathbf{b} - \mathbf{v}_{e_k}}{n - 1}
+$$
+
+The distance between the entity vector $\mathbf{v}_{e_k}$ and its context vector $\mathbf{c}_{e_k}$ is then calculated using the Euclidean norm:
+
+$$
+\text{distance} = \|\mathbf{v}_{e_k} - \mathbf{c}_{e_k}\|
+$$
+
+To adjust the embedding, the gradient of the context vector, scaled by a learning rate $\alpha$ and the computed distance, is added to the entity vector:
+
+$$
+\mathbf{v}_{e_k} \leftarrow \mathbf{v}_{e_k} + \alpha \cdot \text{distance} \cdot \mathbf{c}_{e_k}
+$$
+
+Simultaneously, the base vector $\mathbf{b}$ is updated to reflect the change in $\mathbf{v}_{e_k}$. This iterative adjustment ensures that entity vectors are nudged closer to their cluster context while preserving the dynamic interdependence of embeddings within the cluster. Over multiple epochs, this process creates embeddings where entities within the same cluster are more cohesively represented.
+
+Unlike traditional models such as CBOW, ECP does not predict a target entity but instead focuses on optimizing the relative positioning of entities within predefined clusters, making it particularly suitable for non-sequential data contexts like playlists or grouped recommendations.
+
 
 
 ### Model Validation
@@ -90,13 +121,13 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 ### Model Evaluation Report
 | Model              | Vector Size | Window | Min Count | Epoch | Learning Rate (Alpha) | Training Algorithm | NS Exponent | Precision@1 | Precision@3 | 
 |--------------------|-------------|--------|-----------|-------|------------------------|--------------------|-------------|-------------------------------|-------------------------------|
-| b25-sn-v50         | 50          | 5      | 1         | 5     | 0.025                      | CBOW               | -              | 0.3672                        | 0.3505                        |
+| b25-sn-v50         | 50          | 5      | 1         | 5     | 0.025                      | CBOW               | -              | **0.3672**                        | **0.3505**                        |
 | b25-sn-v256-a      | 256         | 5      | 1         | 5     | 0.025                      | CBOW               | -           | 0.3669                        | 0.3451                       |
 | b25-sn-v256-b      | 256         | 10     | 1         | 5     | 0.025                      | CBOW               | -            | 0.4333                        | 0.3554                       |
 | b25-sn-v256-c      | 256         | 20     | 1         | 5     | 0.025                      | CBOW               | -               | 0.4427                        |0.3649                       |
-| b25-sn-v256-d      | 256         | 20     | 1         | 5     | 0.025                      | Skip-Gram          | 0.0             | 0.6513                        |0.5578                       |
+| b25-sn-v256-d      | 256         | 20     | 1         | 5     | 0.025                      | Skip-Gram          | 0.0             | **0.6513**                        | **0.5578**                       |
 | b25-sn-v512-a      | 512         | 100    | 1         | 5     | 0.025                      | CBOW               | -           | 0.5703                        | 0.4709                       |
-| b25-sn-v512-b      | 512         | 100    | 1         | 5     | 0.025                      | Skip-Gram          | 0.0             | 0.7739                        |0.6639                       |
+| b25-sn-v512-b      | 512         | 100    | 1         | 5     | 0.025                      | Skip-Gram          | 0.0             |**0.7739**                        |**0.6639**                       |
 | b25-sn-v512-c      | 512         | inf   | 1         | 15     | 0.015                    | ECP               | -             | 0.2196                         |N/A                       |
 | b25-sn-v512-d      | 512         | inf   | 1         | 15     | 0.025                    | ECP               | -             | 0.2362                         |N/A                       |
 | b25-sn-v512-e      | 512         | inf   | 1         | 15     | 0.025                    | ECP-d               | -             | 0.0528                        |N/A                       |

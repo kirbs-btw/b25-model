@@ -11,7 +11,7 @@ class DistNorm(Enum):
     L2 = "L2"
 
 
-class Song2VecC:
+class ECP:
     """
     Class to handle model training
     """
@@ -26,7 +26,7 @@ class Song2VecC:
         algorithm=0,
         epochs=5,
         learning_rate=0.001,
-        dist_method=DistNorm.NONE,
+        score_norm=DistNorm.NONE,
     ):
         self.vector_size: int = vector_size
         self.window: int = window
@@ -34,7 +34,7 @@ class Song2VecC:
         self.workers: int = workers
         self.algorithm: int = algorithm
         self.epochs: int = epochs
-        self.__dist_method = dist_method
+        self.__score_method = score_norm
         self.learning_rate: float = learning_rate
         self.__max_distance: float = math.sqrt(4 * self.vector_size)
         self.vector_map: dict = self.__create_vec_map(training_data)
@@ -51,10 +51,6 @@ class Song2VecC:
         return vec_map
 
     def __epoch(self, training_data):
-        """
-        faster way
-        """
-
         for cluster in training_data:
             if len(cluster) < 2:
                 continue
@@ -71,7 +67,7 @@ class Song2VecC:
                     np.subtract(base_vector, data_point_vector), context_size
                 )
                 dist_vector = np.subtract(context_vector, data_point_vector)
-                if self.__dist_method == DistNorm.L2:
+                if self.__score_method == DistNorm.L2:
                     score = np.linalg.norm(dist_vector) / self.__max_distance
                     dist_vector * score
                 # pushing it into the direction of the context_vector
@@ -112,6 +108,15 @@ class Song2VecC:
         return [[neighbor, dist] for neighbor, dist in nearest_neighbors]
 
     def nearest_k1(self, word):
+        """
+        could implement that method for k nearest
+        i don't need to sort everything like im doing right now...
+        just the ones in k
+        so pretty much do through the list find the 5 lowest numbers
+        and sort them after that to get the k nearest...
+        also just go and think about the highest of the 5 because every other one es are still smaller / will not be thrown out of the list
+        """
+
         if word not in self.vector_map:
             return []
 

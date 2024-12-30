@@ -1,1 +1,1 @@
-from .core import Song2Vec
+from .core import *

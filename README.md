@@ -165,9 +165,8 @@ Obtaining sufficient data to ensure coverage for every song within the dataset h
 
 The computational demands of training a unique model for each user render this approach impractical, especially considering the substantial time required for model training. Furthermore, the memory complexity of each model scales as $O(n)$, where $n$ represents the number of songs incorporated in the model. This scaling limitation underscores the need for optimization strategies in both memory management and computational efficiency to handle the growth in dataset size and maintain feasible training times.
 
-**Impact of limitations**
+One of the primary constraints on further research in this paper stemmed from hardware limitations. Identifying the empirical maximum for model fitting and examining how the entity vector size correlates with model accuracy are crucial directions for future work. Moreover, these hardware constraints also highlight the limited nature of the training dataset. While the dataset used here was sufficient for the algorithms’ evaluation within this paper’s scope, a more sophisticated dataset is required for real-world applications.
 
-**Future Work**
 Future work will focus on applying the insights from this study to expand the potential use cases of the proposed models, including personalized playlist recommendations, dynamic playlist generation, and cross-domain applications such as video or podcast suggestions. Additionally, optimizing the algorithms is critical to improving memory efficiency and computational performance, which will involve addressing bottlenecks in the training process, refining data handling to reduce redundancy, and implementing lower-level programming optimizations. These efforts aim to ensure scalability and robustness for handling larger datasets while maintaining or improving accuracy and speed.
 
 **Closing Remarks**
@@ -212,38 +211,13 @@ For CBOS to work i need to convert the algorithm to real c code and also optimiz
     --> possible to throw it on some cluster idk
 
 ## notes
-It is possible there is an issue with the c code or anysthing else...   
-    --> 100 playlists (all ~40 Songs long) train for 1.5 min
-    --> 2000 playlists still training by now 446min... 
-Possible to speed up the training by about 17x by pushing an inner loop out in a way
-Found an other speed up with memory management about 30x but less exact... 
-
-Still need to test other variations of embedding algorithms to use: 
-Graph Embedding Methods --> look into if it has implication
-Matrix Factorization: Used in collaborative filtering to uncover latent factors in user-item interactions.
-GloVe (Global Vectors): Combines global matrix factorization and local context methods to capture global co-occurrence statistics.
-
-Designing a Custom Model:
-
-Global Co-occurrence Focus: Shift from local context windows to capturing global co-occurrence patterns of songs within playlists.
-
 Validation Techniques:
 Employ k-fold cross-validation to ensure the model generalizes well to unseen data.
+
 Monitor for overfitting by comparing training and validation losses.
 
-Evaluation Metrics:
-
-Comprehensive Metrics:
-Beyond accuracy, use Precision@K, Recall@K, Mean Reciprocal Rank (MRR), and Normalized Discounted Cumulative Gain (NDCG).
 A/B Testing:
 If possible, conduct user studies or live A/B tests to assess recommendation quality in real-world scenarios.
-
-The new algorithme with parts of glove and CBOW in combination is not showing realy good results... 
-The training for the full size model would approx take 7 Days... 
-
-Started training the new model with very little hope to get better results. Training will take abt 2 Days with the Optimized algorithm.
-
-Model Training crashed after on day will need to revisisit things like datacleaning and find a new approche on traingni the model. Glove did not have good stats to start with... 
 
 Talk about what randomguessing would be the number to set a persepctive for the results
 

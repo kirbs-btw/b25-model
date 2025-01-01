@@ -145,6 +145,8 @@ The first iteration of the newly developed algorithm for song embedding did not 
 **Comparison with Prior Work**
 The results of the study show that while genre-based clustering remains prevalent in playlists, deviations from this norm often arise. These deviations highlight the influence of broader cultural and social phenomena on playlist composition. Specifically, subclusters within the embeddings are more aligned with emerging trends, significant social events, and references to popular media such as movies and TV shows, rather than strictly adhering to genre boundaries. This observation aligns with existing research suggesting that user-generated content, including playlists, reflects contextual and cultural dimensions, thereby offering nuanced insights beyond traditional genre categorizations.
 
+/*some more comments about the similarities with prior work exp. [Köse, B., Eken, S. and Sayar]. This paper does not explore the pipline but furthermore testing different approches to get higher accuracy*/
+
 
 This research advances the application of classical vectorization algorithms by extending their usage into non-traditional domains, specifically music recommendation systems. In addition to adapting established methodologies like CBOW (Continuous Bag of Words) and Skip-Gram for embedding songs within playlists, the study introduces a novel algorithm, termed Entity Clustering (EC). This algorithm represents a contribution to the general field of vectorization by refining the representation of semantic relationships between entities.
 
@@ -190,6 +192,8 @@ Lezama-Sánchez, A.L., Tovar Vidal, M. and Reyes-Ortiz, J.A., 2022. An approach 
 Chiang, H.Y., Camacho-Collados, J. and Pardos, Z., 2020, November. Understanding the source of semantic regularities in word embeddings. In Proceedings of the 24th Conference on Computational Natural Language Learning (pp. 119-131).
 
 Wang, Y. and Craig, P., 2017, November. Vector space model embedding for recomender system neural networks. In 2017 4th International Conference on Systems and Informatics (ICSAI) (pp. 599-604). IEEE.
+
+Köse, B., Eken, S. and Sayar, A., 2017. Playlist generation via vector representation of songs. In Advances in Big Data: Proceedings of the 2nd INNS Conference on Big Data, October 23-25, 2016, Thessaloniki, Greece 2 (pp. 179-185). Springer International Publishing.
 
 ### General Observations and Future Steps
 - **Need for Larger Test Sets**: All models should be tested against a much larger set of playlists, as testing on only 250 playlists may not provide sufficient variability and insight into model performance. Thats about 10.000 songs

@@ -9,7 +9,7 @@ Many word embedding algorithms, such as Word2Vec, focus on local context windows
 
 ## Related work
 
-The concept of modeling semantic relationships between entities in their context is well-established, particularly in natural language processing (NLP) [Lezama-Sánchez, 2022]. Recent advancements in this area [Chiang et al., 2020] have highlighted its applicability beyond text analysis. For instance, the principles of NLP can be adapted to playlists, where playlists provide the context, and songs represent the entities. By treating playlists as analogous to sentences and songs as words, NLP techniques like word embeddings can be repurposed, offering novel approaches for modeling relationships in music recommendation systems.
+The concept of modeling semantic relationships between entities in their context is well-established, particularly in natural language processing (NLP) [Lezama-Sánchez, 2022]. Recent advancements in this area [Chiang et al., 2020] have highlighted its applicability beyond text analysis. For instance, the principles of NLP can be adapted to playlists, where playlists provide the context, and songs represent the entities. By treating playlists as analogous to sentences and songs as words, NLP techniques like word embeddings can be repurposed, offering novel approaches for modeling relationships in music recommendation systems. Related studies have explored vector space model embeddings in recommender systems, specifically utilizing neural networks to enhance predictive accuracy [Wang and Craig, 2017]. Their work underscores the potential of embedding techniques to model semantic relationships in diverse recommendation scenarios, providing a foundation for advancements in playlist-based systems.
 
 ## Methodology
 
@@ -188,6 +188,8 @@ Johansson, R. and Johansson, R., 2015. [Code optimization. Numerical Python: A P
 Lezama-Sánchez, A.L., Tovar Vidal, M. and Reyes-Ortiz, J.A., 2022. An approach based on semantic relationship embeddings for text classification. Mathematics, 10(21), p.4161.
 
 Chiang, H.Y., Camacho-Collados, J. and Pardos, Z., 2020, November. Understanding the source of semantic regularities in word embeddings. In Proceedings of the 24th Conference on Computational Natural Language Learning (pp. 119-131).
+
+Wang, Y. and Craig, P., 2017, November. Vector space model embedding for recomender system neural networks. In 2017 4th International Conference on Systems and Informatics (ICSAI) (pp. 599-604). IEEE.
 
 ### General Observations and Future Steps
 - **Need for Larger Test Sets**: All models should be tested against a much larger set of playlists, as testing on only 250 playlists may not provide sufficient variability and insight into model performance. Thats about 10.000 songs

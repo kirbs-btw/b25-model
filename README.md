@@ -234,3 +234,5 @@ Now training a realy big model with 2048 Dimensions to test the capabilities her
 
 The 2048v Model is slow for a usual usecase further testing will be done in a future paper due to hardware limitations
 The model has for day to day use no practical application. For research purpouses more test will follow
+
+With the new database the best model for 256v gets 0.4939 thats less then 0.6513 from the prev dataset

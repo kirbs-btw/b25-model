@@ -236,3 +236,7 @@ The 2048v Model is slow for a usual usecase further testing will be done in a fu
 The model has for day to day use no practical application. For research purpouses more test will follow
 
 With the new database the best model for 256v gets 0.4939 thats less then 0.6513 from the prev dataset
+with clearing out the upper part of the playlists 0.3602
+
+p@3: 0.32173375887985173 for the new base model... 
+form 0.5578 prev thats a lot of missing out... 

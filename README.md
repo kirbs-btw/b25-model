@@ -235,8 +235,9 @@ Now training a realy big model with 2048 Dimensions to test the capabilities her
 The 2048v Model is slow for a usual usecase further testing will be done in a future paper due to hardware limitations
 The model has for day to day use no practical application. For research purpouses more test will follow
 
-With the new database the best model for 256v gets 0.4939 thats less then 0.6513 from the prev dataset
+With the new data the best model for 256v gets 0.4939. thats less then 0.6513 from the prev dataset
 with clearing out the upper part of the playlists 0.3602
 
 p@3: 0.32173375887985173 for the new base model... 
 form 0.5578 prev thats a lot of missing out... 
+0.4975805621332235 for 10 epochs 5 epochs prev for the same data reach 0.4939 

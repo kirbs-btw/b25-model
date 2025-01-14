@@ -227,14 +227,6 @@ If possible, conduct user studies or live A/B tests to assess recommendation qua
 
 Talk about what randomguessing would be the number to set a persepctive for the results
 
-Not quite sure where the threshold would be for the wv because some clusters are still clusters but have furthere spacing from each other and others are nearer together but still pose the same cluster
-because there are like 12 Milion songs in the dataset/vector space... 
-Without a clear threshold to set it's not realy possible to do a recall@k testing
-Now training a realy big model with 2048 Dimensions to test the capabilities here... 
-
-The 2048v Model is slow for a usual usecase further testing will be done in a future paper due to hardware limitations
-The model has for day to day use no practical application. For research purpouses more test will follow
-
 With the new data the best model for 256v gets 0.4939. thats less then 0.6513 from the prev dataset
 with clearing out the upper part of the playlists 0.3602
 

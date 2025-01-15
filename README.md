@@ -1,11 +1,11 @@
 # b25 - Embedding Songs in Playlist Contexts: Adapting Word Embedding Techniques for Music Recommendation Systems
 
 ## Introduction
-Training a standard word embedding model involves exposing it to a large corpus of sentences, allowing it to learn the semantic relationships between words by analyzing how they co-occur within sentence structures. This process relies on the distributional hypothesis, which suggests that words appearing in similar contexts tend to have similar meanings.
+Training a standard word embedding model involves exposing it to a large corpus of sentences, allowing it to learn the semantic relationships between words by analyzing how they co-occur within sentence structures[Pilehvar]. This process relies on the distributional hypothesis, which suggests that words appearing in similar contexts tend to have similar meanings[Sahlgren].
 
-The approach in question extends this concept by drawing an analogy between sentences as collections of words and playlists as collections of songs. To construct a model for playlists, one could initially consider the song titles as the equivalent of words and the playlists as analogous to sentences. However, this direct mapping poses challenges when utilizing algorithms designed for natural language processing.
+The approach in question extends this concept by drawing an analogy between sentences as collections of words and playlists as collections of songs[Köse]. To construct a model for playlists, one could initially consider the song titles as the equivalent of words and the playlists as analogous to sentences. However, this direct mapping poses challenges when utilizing algorithms designed for natural language processing.
 
-Many word embedding algorithms, such as Word2Vec, focus on local context windows—capturing the relationships between a word and its immediate neighbors. This assumption of locality doesn't directly translate to playlists, where the relationship between songs isn't necessarily dependent on their proximity or order within the playlist. Hence, adapting such algorithms for playlist modeling requires addressing the contextual difference between word co-occurrence and song co-inclusion in playlists. 
+Many word embedding algorithms, such as Word2Vec, focus on local context windows—capturing the relationships between a word and its immediate neighbors[Xia]. This assumption of locality doesn't directly translate to playlists, where the relationship between songs isn't necessarily dependent on their proximity or order within the playlist. Hence, adapting such algorithms for playlist modeling requires addressing the contextual difference between word co-occurrence and song co-inclusion in playlists. 
 
 ## Related work
 
@@ -194,6 +194,12 @@ Chiang, H.Y., Camacho-Collados, J. and Pardos, Z., 2020, November. Understanding
 Wang, Y. and Craig, P., 2017, November. Vector space model embedding for recomender system neural networks. In 2017 4th International Conference on Systems and Informatics (ICSAI) (pp. 599-604). IEEE.
 
 Köse, B., Eken, S. and Sayar, A., 2017. Playlist generation via vector representation of songs. In Advances in Big Data: Proceedings of the 2nd INNS Conference on Big Data, October 23-25, 2016, Thessaloniki, Greece 2 (pp. 179-185). Springer International Publishing.
+
+Sahlgren, M., 2008. The distributional hypothesis. Italian Journal of linguistics, 20, pp.33-53.
+
+Pilehvar, M.T. and Camacho-Collados, J., 2020. Embeddings in natural language processing: Theory and advances in vector representations of meaning. Morgan & Claypool Publishers.
+
+Xia, H., 2023, November. Continuous-bag-of-words and Skip-gram for word vector training and text classification. In Journal of Physics: Conference Series (Vol. 2634, No. 1, p. 012052). IOP Publishing.
 
 ### General Observations and Future Steps
 - **Need for Larger Test Sets**: All models should be tested against a much larger set of playlists, as testing on only 250 playlists may not provide sufficient variability and insight into model performance. Thats about 10.000 songs

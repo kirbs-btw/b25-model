@@ -9,7 +9,7 @@ Many word embedding algorithms, such as Word2Vec, focus on local context windows
 
 ## Related work
 
-The concept of modeling semantic relationships between entities in their context is well-established, particularly in natural language processing (NLP) [Lezama-Sánchez, 2022]. Recent advancements in this area [Chiang et al., 2020] have highlighted its applicability beyond text analysis. For instance, the principles of NLP can be adapted to playlists, where playlists provide the context, and songs represent the entities. By treating playlists as analogous to sentences and songs as words, NLP techniques like word embeddings can be repurposed, offering novel approaches for modeling relationships in music recommendation systems. Related studies have explored vector space model embeddings in recommender systems, specifically utilizing neural networks to enhance predictive accuracy [Wang and Craig, 2017]. Their work underscores the potential of embedding techniques to model semantic relationships in diverse recommendation scenarios, providing a foundation for advancements in playlist-based systems.
+The concept of modeling semantic relationships between entities in their context is well-established, particularly in natural language processing (NLP) [Lezama-Sánchez, 2022]. Recent advancements in this area [Chiang et al., 2020] have highlighted its applicability beyond text analysis [Köse]. For instance, the principles of NLP can be adapted to playlists, where playlists provide the context, and songs represent the entities. By treating playlists as analogous to sentences and songs as words, NLP techniques like word embeddings can be repurposed, offering novel approaches for modeling relationships in music recommendation systems. Related studies have explored vector space model embeddings in recommender systems, specifically utilizing neural networks to enhance predictive accuracy [Wang and Craig, 2017]. Their work underscores the potential of embedding techniques to model semantic relationships in diverse recommendation scenarios, providing a foundation for advancements in playlist-based systems.
 
 ## Methodology
 
@@ -145,9 +145,6 @@ The first iteration of the newly developed algorithm for song embedding did not 
 **Comparison with Prior Work**
 The results of the study show that while genre-based clustering remains prevalent in playlists, deviations from this norm often arise. These deviations highlight the influence of broader cultural and social phenomena on playlist composition. Specifically, subclusters within the embeddings are more aligned with emerging trends, significant social events, and references to popular media such as movies and TV shows, rather than strictly adhering to genre boundaries. This observation aligns with existing research suggesting that user-generated content, including playlists, reflects contextual and cultural dimensions, thereby offering nuanced insights beyond traditional genre categorizations.
 
-/*some more comments about the similarities with prior work exp. [Köse, B., Eken, S. and Sayar]. This paper does not explore the pipline but furthermore testing different approches to get higher accuracy*/
-
-
 This research advances the application of classical vectorization algorithms by extending their usage into non-traditional domains, specifically music recommendation systems. In addition to adapting established methodologies like CBOW (Continuous Bag of Words) and Skip-Gram for embedding songs within playlists, the study introduces a novel algorithm, termed Entity Clustering (EC). This algorithm represents a contribution to the general field of vectorization by refining the representation of semantic relationships between entities.
 
 The EC algorithm is implemented within the b25 model, which is designed to optimize the embedding of songs based on their contextual co-inclusion within playlists rather than their sequential relationships. The approach builds on the principles of contextual embedding but diverges from traditional proximity-based models to account for the unordered and association-driven nature of playlist data.
@@ -209,19 +206,6 @@ Xia, H., 2023, November. Continuous-bag-of-words and Skip-gram for word vector t
 ### Conclusion / work in progress
 CBOW is better for Datasets with many fequent occuring words. Skip-Gram is better with many less frequent words ([Concluded here](https://iopscience.iop.org/article/10.1088/1742-6596/2634/1/012052/meta)). Still need to test what algorithm performes better or is it the case to create an own algorithm for embedding songs inside playlists.  Both algorithms work with some kind of context window to understand the focused word. This type of window looking should not apply to playlists because there is the whole list relevant.
 
-## ideas
-CBOW will be the main focuse here at 
-
-Cleaning up the dataset for outliers to polish the accuracy of the trained model
-
-It's possible that I need to implement my own model for embedding those words of the playlist to let the context window slip.
-
-For CBOS to work i need to convert the algorithm to real c code and also optimize the operations.
---> Tried training it with the full dataset (~1GB) after 1593min of training i needed to cancel it
-    --> starting with basic optimization and also possible to convert it all to c
-    --> rought calculation said the training should take about 1200min...
-    --> possible to throw it on some cluster idk
-
 ## notes
 Validation Techniques:
 Employ k-fold cross-validation to ensure the model generalizes well to unseen data.
@@ -233,6 +217,7 @@ If possible, conduct user studies or live A/B tests to assess recommendation qua
 
 Talk about what randomguessing would be the number to set a persepctive for the results
 
+Unstructured Data for the new dataset: 
 With the new data the best model for 256v gets 0.4939. thats less then 0.6513 from the prev dataset
 with clearing out the upper part of the playlists 0.3602
 

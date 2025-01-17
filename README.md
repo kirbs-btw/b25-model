@@ -227,5 +227,11 @@ form 0.5578 prev thats a lot of missing out...
 0.584680325337177 for 20 epochs 
 0.6112426644702975 for 40 epochs
 
+v512 model with 40 epochs reached
+0.6083 sn-v512-b-a
+v512 model with 5 epochs 
+0.5263 sn-v512-b-b
+
+
 It's important to talk about the accuracy in terms of overfitting. The 78% accuracy with the big model could be the most useful value because the model is also supposed to detect new combinations that are not contained inside the dataset. When reaching 100% the model is overfit to the data. But 78% are a valid result to have there will be further investigation done about the suggested songs. For overall playlist suggestion the precsission@k results till like 10 could be of value... 
 There will some paper progress need to be made to validate the general idea here overall...

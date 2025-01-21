@@ -249,3 +249,6 @@ There will some paper progress need to be made to validate the general idea here
 
 Current results for CBOE 256 - still need to fix the training data bottom trim... 
 0.1709112087679356
+
+Tested with the new data on a small sample biggest model 
+about 60% on the new cleaner data still need to test with higher epoch because of a smaller train set

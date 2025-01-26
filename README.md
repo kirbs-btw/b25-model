@@ -264,3 +264,6 @@ Tested with the new data on a small sample biggest model
 about 60% on the new cleaner data still need to test with higher epoch because of a smaller tr
 
 currently getting a better avg accuracy with the new preprocessing in the dataset with cut of bottom and top...
+
+maybe visit model training times / this paper or an other paper?? 
+best model took 10h on Core 7 Ultra 155H

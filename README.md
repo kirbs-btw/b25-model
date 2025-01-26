@@ -267,3 +267,5 @@ currently getting a better avg accuracy with the new preprocessing in the datase
 
 maybe visit model training times / this paper or an other paper?? 
 best model took 10h on Core 7 Ultra 155H
+
+interesting new results for the new dataset. The 256 model and 512 booth get the same accuracy...

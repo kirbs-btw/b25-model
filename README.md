@@ -224,6 +224,12 @@ Xia, H., 2023, November. Continuous-bag-of-words and Skip-gram for word vector t
 CBOW is better for Datasets with many fequent occuring words. Skip-Gram is better with many less frequent words ([Concluded here](https://iopscience.iop.org/article/10.1088/1742-6596/2634/1/012052/meta)). Still need to test what algorithm performes better or is it the case to create an own algorithm for embedding songs inside playlists.  Both algorithms work with some kind of context window to understand the focused word. This type of window looking should not apply to playlists because there is the whole list relevant.
 
 ## notes
+Next steps:
+- Train every model again with the new dataset
+- Test every model with the new dataset 
+- discuss the results and the usage?
+- find more papers and resources about this topic...
+
 Validation Techniques:
 Employ k-fold cross-validation to ensure the model generalizes well to unseen data.
 

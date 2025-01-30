@@ -126,16 +126,7 @@ The dataset is divided into two sets: training and testing, to mitigate overfitt
 
 ## Results
 ### Model Evaluation Report
-\* trained on 1000 Playlists
-
---- temp note ---
-b25-sn-v256-d-c --> 40 epochs new data
-# Total songs: 29290
-# correct: 20505
-# Accuracy: 0.700068282690338
-# Tested: 29290
-# Wrong: 0
----  
+  
 
 
 ## Discussion 

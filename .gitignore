@@ -3,6 +3,7 @@ data/playlists_dataset
 data/csv/*
 data/tokenized_data/*
 models/*
+models2/*
 song2vec/song2vec/submodule/__pycache__
 song2vec/song2vec/submodule/build
 song2vec/song2vec/submodule/song2vec.cp310-win_amd64.pyd

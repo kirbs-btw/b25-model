@@ -257,14 +257,16 @@ interesting new results for the new dataset. The 256 model and 512 booth get the
 New Table with the Data and newly Trained Models
 | Model              | Vector Size | Window | Min Count | Epoch | Learning Rate (Alpha) | Training Algorithm | NS Exponent | Precision@1 | Precision@3 | 
 |--------------------|-------------|--------|-----------|-------|------------------------|--------------------|-------------|-------------------------------|-------------------------------|
-| b25-sn-v50         | 50          | 5      | 1         | 5     | 0.025                      | CBOW               | -              | N/A                        | N/A                        |
-| b25-sn-v256-a      | 256         | 5      | 1         | 5     | 0.025                      | CBOW               | -           | N/A                        | N/A                       |
-| b25-sn-v256-b      | 256         | 10     | 1         | 5     | 0.025                      | CBOW               | -            | N/A                        | N/A                      |
-| b25-sn-v256-c      | 256         | 20     | 1         | 5     | 0.025                      | CBOW               | -               | N/A                        |N/A                    |
+| b25-sn-v50         | 50          | 5      | 1         | 5     | 0.025                      | CBOW               | -              | 0.2175*                        | N/A                        |
+| b25-sn-v256-a      | 256         | 5      | 1         | 5     | 0.025                      | CBOW               | -           | 0.2175*                        | N/A                       |
+| b25-sn-v256-b      | 256         | 10     | 1         | 5     | 0.025                      | CBOW               | -            | 0.3402*                        | N/A                      |
+| b25-sn-v256-c      | 256         | 20     | 1         | 5     | 0.025                      | CBOW               | -               | 0.3877*                        |N/A                    |
 | b25-sn-v256-d      | 256         | 20     | 1         | 40     | 0.025                      | Skip-Gram          | 0.0             | 0.7001                        | N/A               |
 | b25-sn-v512-a      | 512         | 100    | 1         | 5     | 0.025                      | CBOW               | -           | N/A                        | N/A                       |
 | b25-sn-v512-b      | 512         | 100    | 1         | 40     | 0.025                      | Skip-Gram          | 0.0             |0.6972                        |N/A          |
 | b25-sn-v512-c      | 512         | inf   | 1         | 15     | 0.015                    | ECP               | -             | N/A                         |N/A                       |
 | b25-sn-v512-d      | 512         | inf   | 1         | 15     | 0.025                    | ECP               | -             | N/A                         |N/A                       |
 | b25-sn-v512-e      | 512         | inf   | 1         | 15     | 0.025                    | ECP-d               | -             | N/A                        |N/A                       |
-| b25-sn-v512-e*      | 512         | inf   | 1         | 15     | 0.025                    | Glove-a               | -             | N/A                       |N/A                       |
+| b25-sn-v512-e      | 512         | inf   | 1         | 15     | 0.025                    | Glove-a               | -             | N/A                       |N/A                       |
+
+*50 playlists

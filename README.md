@@ -257,7 +257,8 @@ interesting new results for the new dataset. The 256 model and 512 booth get the
 New Table with the Data and newly Trained Models
 | Model              | Vector Size | Window | Min Count | Epoch | Learning Rate (Alpha) | Training Algorithm | NS Exponent | Precision@1 | Precision@3 | 
 |--------------------|-------------|--------|-----------|-------|------------------------|--------------------|-------------|-------------------------------|-------------------------------|
-| b25-sn-v50         | 50          | 5      | 1         | 5     | 0.025                      | CBOW               | -              | 0.2175*                        | N/A                        |
+| b25-sn-v50-a         | 50          | 5      | 1         | 5     | 0.025                      | CBOW               | -              | 0.2175*                        | N/A                        |
+| b25-sn-v50-b         | 50          | 100      | 1         | 40     | 0.025                      | CBOW               | -              | N/A                        | N/A                        |
 | b25-sn-v256-a      | 256         | 5      | 1         | 5     | 0.025                      | CBOW               | -           | 0.2175*                        | N/A                       |
 | b25-sn-v256-b      | 256         | 10     | 1         | 5     | 0.025                      | CBOW               | -            | 0.3402*                        | N/A                      |
 | b25-sn-v256-c      | 256         | 20     | 1         | 5     | 0.025                      | CBOW               | -               | 0.3877*                        |N/A                    |
@@ -270,3 +271,15 @@ New Table with the Data and newly Trained Models
 | b25-sn-v512-e      | 512         | inf   | 1         | 15     | 0.025                    | Glove-a               | -             | N/A                       |N/A                       |
 
 *50 playlists
+
+
+How would an F1 score in this project look like? 
+Take a threshold for a song that is ok 
+Precission would be how many recomended songs in k are in the groundtruth? 
+Recall would be how many songs are correctly recommend that are in a treshold for the num of retrivals 
+
+Precission beeing how many of the recommended songs are in the GT 
+
+Recall how many of the GT songs are retrived in a certain k 
+
+F1 = 2* (Precission * Recall) / Precission + Recall

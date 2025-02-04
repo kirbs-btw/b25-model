@@ -1,11 +1,7 @@
 # b25 - Embedding Songs in Playlist Contexts: Adapting Word Embedding Techniques for Music Recommendation Systems
 
-## Abstract
-This paper explores the adaptation of word embedding methods—commonly employed in natural language processing—to enhance music recommendation systems. Drawing a parallel between sentences and playlists, we treat each song as an entity akin to a word, thus enabling established algorithms like CBOW (Continuous-Bag-of-Words), Skip-Gram, and a GloVe-inspired approach to capture co-occurrence patterns of songs within playlists. We further propose novel embedding models, including Continuous-Bag-of-Entities (CBOE), a modified Skip-Gram for entity contexts, and Entity Cluster Push (ECP), which specifically address the non-sequential and association-driven nature of playlist data.
+## Summary
 
-Results indicate that algorithms leveraging global co-occurrences, particularly larger Skip-Gram models, yield higher precision scores—reaching up to 77.39% precision@1—outperforming traditional proximity-based word embedding strategies. In contrast, our newly introduced ECP method, designed for clustered entities, requires additional refinement, as its initial accuracy did not meet expectations.
-
-These findings underscore both the promise and complexity of translating NLP-driven embedding techniques into domains with non-sequential structures, such as playlist-based music recommendations. By broadening the application of embedding models beyond text, this work offers insights into capturing semantic relationships in entity-centric datasets and suggests pathways for extending these methods to other contexts where items co-occur rather than follow a strict sequence.
 
 ## Introduction
 Training a standard word embedding model involves exposing it to a large corpus of sentences, allowing it to learn the semantic relationships between words by analyzing how they co-occur within sentence structures[Pilehvar]. This process relies on the distributional hypothesis, which suggests that words appearing in similar contexts tend to have similar meanings[Sahlgren].

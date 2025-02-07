@@ -115,10 +115,15 @@ Simultaneously, the base vector $\mathbf{b}$ is updated to reflect the change in
 
 Unlike traditional models such as CBOW, ECP does not predict a target entity but instead focuses on optimizing the relative positioning of entities within predefined clusters, making it particularly suitable for non-sequential data contexts like playlists or grouped recommendations.
 
+---
+Will also need to include the aspect of backtesting and retraining in the cycle depending on the created loss in the training
+---
 
 
 ### Model Validation
 The dataset is divided into two sets: training and testing, to mitigate overfitting. The model evaluation involves selecting a song from a playlist and allowing the model to predict the next song. If the predicted song is present in the same playlist, the prediciton is marked as correct. Currently, the model is not evaluated on its ability to understand the context or sequence of songs, which represents a potential future testing phase. In essence, the model receives one song as input and suggests the next best matching song based on its learned associations.
+
+Model validation is now done with an F1 score. Also possible is to look into building an average vector out of all songs in a playlist but one and backtest it against that --> just presicions for this case a recall would not make sense...
 
 ## Results
 ### Model Evaluation Report
@@ -279,3 +284,5 @@ Precission beeing how many of the recommended songs are in the GT
 Recall how many of the GT songs are retrived in a certain k 
 
 F1 = 2* (Precission * Recall) / Precission + Recall
+
+Worked with a threshold of 0.75 and 0.9 

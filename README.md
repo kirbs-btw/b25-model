@@ -193,17 +193,11 @@ Pilehvar, M.T. and Camacho-Collados, J., 2020. Embeddings in natural language pr
 
 Xia, H., 2023, November. Continuous-bag-of-words and Skip-gram for word vector training and text classification. In Journal of Physics: Conference Series (Vol. 2634, No. 1, p. 012052). IOP Publishing.
 
-### General Observations and Future Steps
-- **Need for Larger Test Sets**: All models should be tested against a much larger set of playlists, as testing on only 250 playlists may not provide sufficient variability and insight into model performance. Thats about 10.000 songs
-- **Accuracy Potential**: It remains to be seen how high the accuracy can reach with these approaches, but further experimentation and optimization are necessary.
-
-
 ### Conclusion / work in progress
 CBOW is better for Datasets with many fequent occuring words. Skip-Gram is better with many less frequent words ([Concluded here](https://iopscience.iop.org/article/10.1088/1742-6596/2634/1/012052/meta)). Still need to test what algorithm performes better or is it the case to create an own algorithm for embedding songs inside playlists.  Both algorithms work with some kind of context window to understand the focused word. This type of window looking should not apply to playlists because there is the whole list relevant.
 
 ## notes
-Next steps:
-- Train every model again with the new dataset
+Next steps
 - Test every model with the new dataset 
 - discuss the results and the usage?
 - find more papers and resources about this topic...

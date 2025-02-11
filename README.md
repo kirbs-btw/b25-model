@@ -280,3 +280,31 @@ Recall how many of the GT songs are retrived in a certain k
 F1 = 2* (Precission * Recall) / Precission + Recall
 
 Worked with a threshold of 0.75 and 0.9 
+
+Raw Table:
+
+Model: b25-sn-v50-a  
+Vector Size: 50
+Window: 5
+Min Count: 1
+Epoch: 5
+Learning Rate (Alpha): 0.025
+Algorithm: CBOW
+NS Exponent: -
+Precission@1: -
+F1:
+Precission:
+Recall: 
+
+Model: b25-sn-v50-b  
+Vector Size: 50
+Window: 100
+Min Count: 1
+Epoch: 40
+Learning Rate (Alpha): 0.025
+Algorithm: CBOW
+NS Exponent: -
+Precission@1: 
+F1:
+Precission:
+Recall: 

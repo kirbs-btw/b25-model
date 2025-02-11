@@ -304,7 +304,7 @@ Epoch: 40
 Learning Rate (Alpha): 0.025
 Algorithm: CBOW
 NS Exponent: -
-Precission@1: 
-F1:
-Precission:
-Recall: 
+Precission@1: 0.6498
+F1: 0.29656440385436406
+Precission:  0.1888
+Recall: 0.6912

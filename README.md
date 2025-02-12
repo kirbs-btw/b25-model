@@ -291,10 +291,10 @@ Epoch: 5
 Learning Rate (Alpha): 0.025
 Algorithm: CBOW
 NS Exponent: -
-Precission@1: -
-F1:
-Precission:
-Recall: 
+Precission@1: 0.1640
+F1: 0.0551
+Precission: 0.0351
+Recall: 0.1284
 
 Model: b25-sn-v50-b  
 Vector Size: 50
@@ -308,3 +308,16 @@ Precission@1: 0.6498
 F1: 0.29656440385436406
 Precission:  0.1888
 Recall: 0.6912
+
+Model: b25-sn-v256-a  
+Vector Size: 256
+Window: 5
+Min Count: 1
+Epoch: 5
+Learning Rate (Alpha): 0.025
+Algorithm: CBOW
+NS Exponent: -
+Precission@1: -
+F1: 0.05103450973674076
+Precission: 0.0325
+Recall: 0.1190

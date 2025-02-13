@@ -281,6 +281,17 @@ F1 = 2* (Precission * Recall) / Precission + Recall
 
 Worked with a threshold of 0.75 and 0.9 
 
+Ok put together a table of things to look at 
+Algorithms: 
+CBOW - v128 - v256 - v512 
+SG - v128 - v256 - v512
+ECP - v128 - v256 - v512
+SGE - v128 - v256 - v512
+CBOE - v128 - v256 - v512
+Looking at the windows 50? 128 256 512 --> talking about the scaling between those things there
+And than looking at the Window size for the NLP models CBOW, SG
+And than epoch of 5 20 and 40 i guess
+
 Raw Table:
 
 Model: b25-sn-v50-a  
@@ -305,7 +316,7 @@ Learning Rate (Alpha): 0.025
 Algorithm: CBOW
 NS Exponent: -
 Precission@1: 0.6498
-F1: 0.29656440385436406
+F1: 0.2966
 Precission:  0.1888
 Recall: 0.6912
 
@@ -321,3 +332,42 @@ Precission@1: -
 F1: 0.05103450973674076
 Precission: 0.0325
 Recall: 0.1190
+
+Model: b25-sn-v256-b  
+Vector Size: 256
+Window: 10
+Min Count: 1
+Epoch: 5
+Learning Rate (Alpha): 0.025
+Algorithm: CBOW
+NS Exponent: -
+Precission@1: 0.2107
+F1: 0.0631
+Precission: 0.0402
+Recall: 0.1472
+
+Model: b25-sn-v256-c  
+Vector Size: 256
+Window: 20
+Min Count: 1
+Epoch: 5
+Learning Rate (Alpha): 0.025
+Algorithm: CBOW
+NS Exponent: -
+Precission@1: 0.2966
+F1: 0.07271412702512943
+Precission: 0.0463
+Recall: 0.1695
+
+Model: b25-sn-v256-d  
+Vector Size: 256
+Window: 20
+Min Count: 1
+Epoch: 40
+Learning Rate (Alpha): 0.025
+Algorithm: Skip Gram
+NS Exponent: 0.0
+Precission@1: -
+F1: 0.2470
+Precission:  0.1572
+Recall: 0.5757

@@ -283,13 +283,13 @@ Worked with a threshold of 0.75 and 0.9
 
 Ok put together a table of things to look at 
 Algorithms: 
-CBOW - v128 - v256 - v512 
-SG - v128 - v256 - v512
-ECP - v128 - v256 - v512
-SGE - v128 - v256 - v512
-CBOE - v128 - v256 - v512
+CBOW - v64 - v256 - v512 
+SG - v64 - v256 - v512
+ECP - v64 - v256 - v512
+SGE - v64 - v256 - v512
+CBOE - v64 - v256 - v512
 Looking at the windows 50? 128 256 512 --> talking about the scaling between those things there
-And than looking at the Window size for the NLP models CBOW, SG
+And than looking at the Window size for the NLP models CBOW, SG - 10, 150
 And than epoch of 5 20 and 40 i guess
 
 Raw Table:
@@ -367,7 +367,7 @@ Epoch: 40
 Learning Rate (Alpha): 0.025
 Algorithm: Skip Gram
 NS Exponent: 0.0
-Precission@1: -
+Precission@1: 0.6600
 F1: 0.2470
 Precission:  0.1572
 Recall: 0.5757

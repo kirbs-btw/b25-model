@@ -38,3 +38,5 @@ paper/*
 # Cache directories
 __pycache__/
 *.pytest_cache/
+
+notebooks/README.md 

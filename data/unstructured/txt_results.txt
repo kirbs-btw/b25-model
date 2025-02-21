@@ -1,0 +1,145 @@
+Testing b25-CBOW-64-5-10
+
+Micro-average evaluation:
+Precision: 0.0417
+Recall:    0.1526
+F1: 0.06545566382025017
+Testing b25-CBOW-64-5-150
+
+Micro-average evaluation:
+Precision: 0.1289
+Recall:    0.4720
+F1: 0.20250518822971603
+Testing b25-CBOW-64-20-10
+
+Micro-average evaluation:
+Precision: 0.0558
+Recall:    0.2045
+F1: 0.08772272967316683
+Testing b25-CBOW-64-20-150
+
+Micro-average evaluation:
+Precision: 0.1842
+Recall:    0.6744
+F1: 0.28931740635051456
+Testing b25-CBOW-256-5-10
+
+Micro-average evaluation:
+Precision: 0.0408
+Recall:    0.1493
+F1: 0.06404133587557151
+Testing b25-CBOW-256-5-150
+
+Micro-average evaluation:
+Precision: 0.1383
+Recall:    0.5065
+F1: 0.2173208973192517
+Testing b25-CBOW-256-20-10
+
+Micro-average evaluation:
+Precision: 0.0578
+Recall:    0.2118
+F1: 0.09085893613132409
+Testing b25-CBOW-256-20-150
+
+Micro-average evaluation:
+Precision: 0.1852
+Recall:    0.6781
+F1: 0.29090978988765637
+Testing b25-SG-64-5-10
+
+Micro-average evaluation:
+Precision: 0.0443
+Recall:    0.1622
+F1: 0.06957387384896165
+Testing b25-SG-64-5-150
+
+Micro-average evaluation:
+Precision: 0.1775
+Recall:    0.6500
+F1: 0.27887012935334116
+Testing b25-SG-64-20-10
+
+Micro-average evaluation:
+Precision: 0.0913
+Recall:    0.3345
+F1: 0.143504039636254
+Testing b25-SG-64-20-150
+
+Micro-average evaluation:
+Precision: 0.1874
+Recall:    0.6861
+F1: 0.2943704082396575
+Testing b25-SG-256-5-10
+
+Micro-average evaluation:
+Precision: 0.0437
+Recall:    0.1600
+F1: 0.06865459440757059
+Testing b25-SG-256-5-150
+
+Micro-average evaluation:
+Precision: 0.1722
+Recall:    0.6305
+F1: 0.2705021909605762
+Testing b25-SG-256-20-10
+
+Micro-average evaluation:
+Precision: 0.0926
+Recall:    0.3391
+F1: 0.14550109497444833
+Testing b25-SG-256-20-150
+
+Micro-average evaluation:
+Precision: 0.1818
+Recall:    0.6656
+F1: 0.28557149437877144
+
+Testing b25-CBOW-512-5-10
+
+Micro-average evaluation:
+Precision: 0.0402
+Recall:    0.1474
+F1: 0.06322996891446114
+Testing b25-CBOW-512-5-150
+
+Micro-average evaluation:
+Precision: 0.1384
+Recall:    0.5066
+F1: 0.21735394551633763
+Testing b25-CBOW-512-20-10
+
+Micro-average evaluation:
+Precision: 0.0557
+Recall:    0.2040
+F1: 0.08750960252461248
+Testing b25-CBOW-512-20-150
+
+Micro-average evaluation:
+Precision: 0.1862
+Recall:    0.6819
+F1: 0.2925581530239438
+Testing b25-SG-512-5-10
+
+Micro-average evaluation:
+Precision: 0.0436
+Recall:    0.1596
+F1: 0.0684569796780566
+Testing b25-SG-512-5-150
+
+Micro-average evaluation:
+Precision: 0.1704
+Recall:    0.6238
+F1: 0.26763913796812944
+Testing b25-SG-512-20-10
+
+Micro-average evaluation:
+Precision: 0.0893
+Recall:    0.3271
+F1: 0.14032669154498972
+Testing b25-SG-512-20-150
+
+Micro-average evaluation:
+Precision: 0.1817
+Recall:    0.6652
+F1: 0.28538467089728553

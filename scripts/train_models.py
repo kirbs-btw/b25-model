@@ -3,7 +3,7 @@ import pickle
 import os
 import sys
 
-sys.path.append(os.path.abspath("../"))  # Adjust based on the notebook's location
+sys.path.append(os.path.abspath("../"))
 
 from sge import *
 from cboe import *

@@ -65,10 +65,6 @@ def evaluate_recall_precision_micro(model, playlists, top_n=100):
                 # about avg playlist size + some
                 # similar_words = model.nearest(song, top_n)
                 similar_words = model.wv.most_similar(song, topn=top_n)
-                # avg_similarity = sum(sim for _, sim in similar_words) / top_n
-                # similar_songs = [
-                #     (word, sim) for word, sim in similar_words if sim >= 0.90 * avg_similarity
-                # ]
 
                 similar_songs = [
                     (word, sim) for word, sim in similar_words if sim >= 0.75
@@ -84,8 +80,6 @@ def evaluate_recall_precision_micro(model, playlists, top_n=100):
             total_correct += len(correct)
             total_recommended += top_n
             total_relevant += len(ground_truth)
-            # sound dumb when i suggest only 10 and there are 800 in the playlist that just depends on the top_n??? --> recall would be with some kind of threshold to pick not with top n - so if gt is less than top_n add gt_len else add top_n to not skew the results because of the treshold
-            # total_relevant += len(ground_truth)
 
     precision = total_correct / total_recommended if total_recommended else 0
     recall = total_correct / total_relevant if total_relevant else 0

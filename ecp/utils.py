@@ -3,13 +3,6 @@ import numpy as np
 import pickle
 import math
 
-from enum import Enum
-
-
-class DistNorm(Enum):
-    NONE = "none"
-    L2 = "L2"
-
 
 class ECP:
     """
@@ -26,7 +19,6 @@ class ECP:
         algorithm=0,
         epochs=5,
         learning_rate=0.001,
-        score_norm=DistNorm.NONE,
     ):
         self.vector_size: int = vector_size
         self.window: int = window
@@ -34,7 +26,6 @@ class ECP:
         self.workers: int = workers
         self.algorithm: int = algorithm
         self.epochs: int = epochs
-        self.__score_method = score_norm
         self.learning_rate: float = learning_rate
         self.__max_distance: float = math.sqrt(4 * self.vector_size)
         self.vector_map: dict = self.__create_vec_map(training_data)
@@ -51,6 +42,10 @@ class ECP:
         return vec_map
 
     def __epoch(self, training_data):
+        """
+        faster way
+        """
+
         for cluster in training_data:
             if len(cluster) < 2:
                 continue
@@ -67,11 +62,9 @@ class ECP:
                     np.subtract(base_vector, data_point_vector), context_size
                 )
                 dist_vector = np.subtract(context_vector, data_point_vector)
-                if self.__score_method == DistNorm.L2:
-                    score = np.linalg.norm(dist_vector) / self.__max_distance
-                    dist_vector * score
+                score = np.linalg.norm(dist_vector) / self.__max_distance
                 # pushing it into the direction of the context_vector
-                gradient = dist_vector * self.learning_rate
+                gradient = dist_vector * self.learning_rate * score
                 updated_data_point_vector = np.add(data_point_vector, gradient)
 
                 # changing the base vector with it to keep up with the changing context
@@ -84,39 +77,43 @@ class ECP:
             self.__epoch(training_data)
 
     def nearest(self, word, k=1):
+        # If the word isn't in the vector map, return an empty list.
         if word not in self.vector_map:
             return []
 
         target_vector = self.vector_map[word]
 
-        words = list(self.vector_map.keys())
-        vectors = np.array(list(self.vector_map.values()))
+        # Cache the keys and vectors if they haven't been cached already.
+        if not hasattr(self, "_words"):
+            self._words = list(self.vector_map.keys())
+            self._vectors = np.array(list(self.vector_map.values()))
 
+        words = self._words
+        vectors = self._vectors
+
+        # Compute the difference between all vectors and the target.
         diff = vectors - target_vector
-        distances = np.linalg.norm(diff, axis=1)
+        # Compute squared Euclidean distances. (Avoid sqrt for every element.)
+        sq_dists = np.einsum("ij,ij->i", diff, diff)
 
+        # Exclude the target word itself by setting its distance to infinity.
         idx = words.index(word)
-        distances[idx] = np.inf
+        sq_dists[idx] = np.inf
 
-        k = min(k, len(distances) - 1)
-        nearest_indices = np.argpartition(distances, k)[:k]
+        # Ensure that k does not exceed the number of available words.
+        k = min(k, len(sq_dists) - 1)
+        # Use argpartition to get the indices of the k smallest distances.
+        candidate_indices = np.argpartition(sq_dists, k)[:k]
+        # Sort these indices by their squared distance.
+        sorted_candidates = candidate_indices[np.argsort(sq_dists[candidate_indices])]
 
-        nearest_neighbors = [(words[i], distances[i]) for i in nearest_indices]
-
-        nearest_neighbors.sort(key=lambda x: x[1])
-
-        return [[neighbor, dist] for neighbor, dist in nearest_neighbors]
+        # Compute the square root only for the k nearest neighbors and return the results.
+        return [
+            [words[i], 1 - (np.sqrt(sq_dists[i]) / self.__max_distance)]
+            for i in sorted_candidates
+        ]
 
     def nearest_k1(self, word):
-        """
-        could implement that method for k nearest
-        i don't need to sort everything like im doing right now...
-        just the ones in k
-        so pretty much do through the list find the 5 lowest numbers
-        and sort them after that to get the k nearest...
-        also just go and think about the highest of the 5 because every other one es are still smaller / will not be thrown out of the list
-        """
-
         if word not in self.vector_map:
             return []
 

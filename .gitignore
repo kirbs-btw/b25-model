@@ -33,6 +33,8 @@ notebooks/algo_testing
 *.pyo
 *.pyd
 
+ecp/strg
+
 paper/*
 
 # Cache directories

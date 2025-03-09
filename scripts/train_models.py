@@ -7,6 +7,7 @@ sys.path.append(os.path.abspath("../"))
 
 from sge import *
 from cboe import *
+from ecp import *
 
 with open("../data/tokenized_data/playlist_names/dataset_train_v3.pkl", "rb") as f:
     train_dataset = pickle.load(f)
@@ -14,7 +15,11 @@ with open("../data/tokenized_data/playlist_names/dataset_train_v3.pkl", "rb") as
 
 algorithms_map = {0: "CBOW", 1: "SG"}
 
-none_window_algorithms_map = {"ECP": "ECP", "SGE": "SGE", "CBOE": "CBOE"}
+none_window_algorithms_map = {
+    # "ECP": "ECP",
+    "SGE": "SGE",
+    "CBOE": "CBOE",
+}
 
 window_sizes = [10, 150]
 epochs = [5, 20]
@@ -67,9 +72,10 @@ for algorithm in none_window_algorithms_map:
             if os.path.exists(model_save_path):
                 print(f"{model_save_path} exists. Skipping...")
                 continue
+            print(f"training: {model_name}")
 
             if algorithm == "ECP":
-                model = son2vecgl_c.Song2GloveC(
+                model = EntityClusterPush(
                     training_data=train_dataset,
                     vector_size=vector_size,
                     epochs=epoch,

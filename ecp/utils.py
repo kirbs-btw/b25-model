@@ -4,7 +4,7 @@ import pickle
 import math
 
 
-class ECP:
+class EntityClusterPush:
     """
     Class to handle model training
     """
@@ -13,18 +13,12 @@ class ECP:
         self,
         training_data,
         vector_size=16,
-        window=5,
         min_count=1,
-        workers=1,
-        algorithm=0,
         epochs=5,
         learning_rate=0.001,
     ):
         self.vector_size: int = vector_size
-        self.window: int = window
         self.min_count: int = min_count
-        self.workers: int = workers
-        self.algorithm: int = algorithm
         self.epochs: int = epochs
         self.learning_rate: float = learning_rate
         self.__max_distance: float = math.sqrt(4 * self.vector_size)

@@ -7,3 +7,8 @@ The project provides implementations of several established embedding models alo
 ## to do's
 - getting all the f1 scores for every model with the v3 data
 - putting together the paper for this repo
+- refactoring the notebooks to a pipeline 
+- refactoring training algo fro SGE 
+- refactoring ECP
+- refactoring CBOWE 
+- deploying to the web

@@ -15,13 +15,6 @@ class SkipGramEntity2Vec:
     ):
         """
         Initialisiert und trainiert ein sehr einfaches Skip-Gram-Modell.
-
-        Argumente:
-            sentences (List[List[str]]): Trainingsdaten (Liste von Listen von Wörtern/Entitäten).
-            vector_size (int): Dimension der Embeddings.
-            min_count (int): Ignoriere Wörter/Entitäten mit Häufigkeit < min_count..
-            epochs (int): Anzahl Epochen.
-            learning_rate (float): Lernrate.
         """
         self.vector_size = vector_size
         self.min_count = min_count
@@ -31,9 +24,14 @@ class SkipGramEntity2Vec:
         # 1) Wortschatz aufbauen
         self._build_vocab(tokenized_data)
 
+        # Precompute index lists for each sentence (nur Wörter im Vokabular)
+        self.sentences_indices = [
+            [self.word_to_idx[w] for w in sent if w in self.word_to_idx]
+            for sent in tokenized_data
+            if len([w for w in sent if w in self.word_to_idx]) >= 2
+        ]
+
         # 2) Gewichte initialisieren
-        #    - W_in: Embeddings für Input (target-Wort)
-        #    - W_out: Embeddings für Output (Kontext-Wort)
         self.W_in = (
             np.random.rand(len(self.idx_to_word), vector_size) - 0.5
         ) / vector_size
@@ -42,7 +40,41 @@ class SkipGramEntity2Vec:
         ) / vector_size
 
         # 3) Modell trainieren (Skip-Gram)
-        self._train(tokenized_data)
+        self._train()
+
+    def _train(self):
+        for epoch in range(self.epochs):
+            total_loss = 0.0
+            for word_indices in self.sentences_indices:
+                for i, target_idx in enumerate(word_indices):
+                    # Alle Kontext-Wort-Indizes außer dem Target
+                    context_indices = word_indices[:i] + word_indices[i + 1 :]
+                    if not context_indices:
+                        continue
+
+                    # Vektor für das target Wort
+                    target_vec = self.W_in[target_idx]  # shape: (vector_size,)
+                    # Vektoren für alle Kontext-Wörter
+                    context_vecs = self.W_out[
+                        context_indices
+                    ]  # shape: (n_context, vector_size)
+
+                    # Compute dot products for all context words at once
+                    scores = np.dot(context_vecs, target_vec)  # shape: (n_context,)
+                    pred_probs = 1.0 / (1.0 + np.exp(-scores))  # sigmoid activation
+
+                    # Verlust summieren (log loss)
+                    total_loss += -np.sum(np.log(pred_probs + 1e-10))
+
+                    # Gradient berechnen (dL/d(score))
+                    grads = pred_probs - 1.0  # shape: (n_context,)
+
+                    # Update: Vektorized Ausgabe-Embeddings
+                    self.W_out[context_indices] -= self.lr * np.outer(grads, target_vec)
+                    # Update: Input-Embedding: Summe der Gradienten von allen Kontext-Wörtern
+                    self.W_in[target_idx] -= self.lr * np.dot(grads, context_vecs)
+
+            print(f"Epoch {epoch+1}/{self.epochs}, Loss: {total_loss:.4f}")
 
     def _build_vocab(self, sentences):
         """
@@ -62,51 +94,6 @@ class SkipGramEntity2Vec:
         # entity <-> id mapping
         self.word_to_idx = {w: i for i, w in enumerate(self.vocab)}
         self.idx_to_word = {i: w for w, i in self.word_to_idx.items()}
-
-    def _train(self, sentences):
-        for epoch in range(self.epochs):
-            total_loss = 0.0
-            for sent in sentences:
-                # Satz in Indizes umwandeln, unbekannte Wörter ignorieren
-                word_indices = [
-                    self.word_to_idx[w] for w in sent if w in self.word_to_idx
-                ]
-                if len(word_indices) < 2:
-                    continue
-
-                # Skip-Gram: Für jedes Wort als "target" werden alle anderen Satz-Wörter als Kontext genommen
-                for i, target_idx in enumerate(word_indices):
-                    context_indices = word_indices[:i] + word_indices[i + 1 :]
-                    if not context_indices:
-                        continue
-
-                    # Für jeden Kontext im Satz
-                    for context_idx in context_indices:
-                        # Forward Pass
-                        # score = W_in[target_idx] · W_out[context_idx]
-                        score = np.dot(self.W_in[target_idx], self.W_out[context_idx])
-
-                        # Sigmoid / "Binary Cross-Entropy"-like Loss (keine negativen Beispiele hier)
-                        pred_prob = 1.0 / (1.0 + np.exp(-score))
-                        loss = -math.log(
-                            pred_prob + 1e-10
-                        )  # log(prob) des korrekten Wortes
-                        total_loss += loss
-
-                        # Backprop
-                        grad = pred_prob - 1.0  # dL/d(score)
-
-                        # Update Output-Embedding
-                        self.W_out[context_idx] -= (
-                            self.lr * grad * self.W_in[target_idx]
-                        )
-
-                        # Update Input-Embedding
-                        self.W_in[target_idx] -= (
-                            self.lr * grad * self.W_out[context_idx]
-                        )
-
-            print(f"Epoch {epoch+1}/{self.epochs}, Loss: {total_loss:.4f}")
 
     def nearest(self, word_or_vector, k=1):
         """

@@ -12,11 +12,10 @@ from ecp import *
 with open("../data/tokenized_data/playlist_names/dataset_train_v3.pkl", "rb") as f:
     train_dataset = pickle.load(f)
 
-
 algorithms_map = {0: "CBOW", 1: "SG"}
 
 none_window_algorithms_map = {
-    "ECP": "ECP",
+    # "ECP": "ECP",
     "SGE": "SGE",
     "CBOE": "CBOE",
 }

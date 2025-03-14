@@ -137,3 +137,33 @@ class EntityClusterPush:
     def save(self, path):
         with open(path, "wb") as file:
             pickle.dump(self, file)
+
+
+if __name__ == "__main__":
+    train_dataset = [
+        ["john", "loves", "mary"],
+        ["mary", "loves", "chocolate"],
+        ["dog", "bites", "man"],
+        ["man", "bites", "dog"],
+    ]
+
+    model = EntityClusterPush(
+        training_data=train_dataset,
+        vector_size=8,
+        min_count=1,
+        epochs=5,
+        learning_rate=0.01,
+    )
+
+    print("\nNearest to 'john':", model.nearest("john", k=2))
+    print("Nearest to 'dog':", model.nearest("dog", k=2))
+
+    model.save("demo_entity_cluster_push.pkl")
+
+    # with open("demo_entity_cluster_push.pkl", "rb") as file:
+    #     loaded_model = pickle.load(file)
+
+    # print(
+    #     "\nNearest to 'chocolate' (from loaded model):",
+    #     loaded_model.nearest("chocolate", k=2),
+    # )

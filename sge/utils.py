@@ -2,6 +2,7 @@ import numpy as np
 import pickle
 from collections import Counter, defaultdict
 import math
+import concurrent.futures
 
 
 class SkipGramEntity2Vec:
@@ -12,6 +13,7 @@ class SkipGramEntity2Vec:
         min_count=1,
         epochs=5,
         learning_rate=0.01,
+        num_workers=10,  # Number of CPU cores to use
     ):
         """
         Initialisiert und trainiert ein sehr einfaches Skip-Gram-Modell.
@@ -20,6 +22,7 @@ class SkipGramEntity2Vec:
         self.min_count = min_count
         self.epochs = epochs
         self.lr = learning_rate
+        self.num_workers = num_workers  # Added to configure parallelism
 
         # 1) Wortschatz aufbauen
         self._build_vocab(tokenized_data)
@@ -45,36 +48,55 @@ class SkipGramEntity2Vec:
     def _train(self):
         for epoch in range(self.epochs):
             total_loss = 0.0
-            for word_indices in self.sentences_indices:
-                for i, target_idx in enumerate(word_indices):
-                    # Alle Kontext-Wort-Indizes außer dem Target
-                    context_indices = word_indices[:i] + word_indices[i + 1 :]
-                    if not context_indices:
-                        continue
-
-                    # Vektor für das target Wort
-                    target_vec = self.W_in[target_idx]  # shape: (vector_size,)
-                    # Vektoren für alle Kontext-Wörter
-                    context_vecs = self.W_out[
-                        context_indices
-                    ]  # shape: (n_context, vector_size)
-
-                    # Compute dot products for all context words at once
-                    scores = np.dot(context_vecs, target_vec)  # shape: (n_context,)
-                    pred_probs = 1.0 / (1.0 + np.exp(-scores))  # sigmoid activation
-
-                    # Verlust summieren (log loss)
-                    total_loss += -np.sum(np.log(pred_probs + 1e-10))
-
-                    # Gradient berechnen (dL/d(score))
-                    grads = pred_probs - 1.0  # shape: (n_context,)
-
-                    # Update: Vektorized Ausgabe-Embeddings
-                    self.W_out[context_indices] -= self.lr * np.outer(grads, target_vec)
-                    # Update: Input-Embedding: Summe der Gradienten von allen Kontext-Wörtern
-                    self.W_in[target_idx] -= self.lr * np.dot(grads, context_vecs)
+            with concurrent.futures.ThreadPoolExecutor(
+                max_workers=self.num_workers
+            ) as executor:
+                # Parallelize training by dispatching work across multiple workers
+                futures = [
+                    executor.submit(self._train_sentence, word_indices)
+                    for word_indices in self.sentences_indices
+                ]
+                for future in concurrent.futures.as_completed(futures):
+                    total_loss += future.result()
 
             print(f"Epoch {epoch+1}/{self.epochs}, Loss: {total_loss:.4f}")
+
+    def _train_sentence(self, word_indices):
+        """
+        Train a single sentence in parallel.
+        This method is used for parallel processing of each sentence in the dataset.
+        """
+        sentence_loss = 0.0
+        for i, target_idx in enumerate(word_indices):
+            # Alle Kontext-Wort-Indizes außer dem Target
+            context_indices = word_indices[:i] + word_indices[i + 1 :]
+
+            if not context_indices:
+                continue
+
+            # Vektor für das target Wort
+            target_vec = self.W_in[target_idx]  # shape: (vector_size,)
+            # Vektoren für alle Kontext-Wörter
+            context_vecs = self.W_out[
+                context_indices
+            ]  # shape: (n_context, vector_size)
+
+            # Compute dot products for all context words at once
+            scores = np.dot(context_vecs, target_vec)  # shape: (n_context,)
+            pred_probs = 1.0 / (1.0 + np.exp(-scores))  # sigmoid activation
+
+            # Verlust summieren (log loss)
+            sentence_loss += -np.sum(np.log(pred_probs + 1e-10))
+
+            # Gradient berechnen (dL/d(score))
+            grads = pred_probs - 1.0  # shape: (n_context,)
+
+            # Update: Vektorized Ausgabe-Embeddings
+            self.W_out[context_indices] -= self.lr * np.outer(grads, target_vec)
+            # Update: Input-Embedding: Summe der Gradienten von allen Kontext-Wörtern
+            self.W_in[target_idx] -= self.lr * np.dot(grads, context_vecs)
+
+        return sentence_loss
 
     def _build_vocab(self, sentences):
         """
@@ -196,6 +218,7 @@ if __name__ == "__main__":
         min_count=1,
         epochs=10,
         learning_rate=0.01,
+        num_workers=10,  # Set number of workers
     )
 
     print("\nNearest to 'john':", model.nearest("john", k=2))

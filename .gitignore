@@ -20,7 +20,7 @@ song2vec/build
 song2vec/song2vec.egg-info
 notebooks/algo_testing
 .glove-venv
-
+sge/strg
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 .env/

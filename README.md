@@ -7,10 +7,9 @@ The project provides implementations of several established embedding models alo
 ## to do's
 - getting all the f1 scores for every model with the v3 data
 - putting together the paper for this repo
-- refactoring the notebooks to a pipeline  
 - refactoring CBOWE 
-- deploying to the web4
 
 ## notes 
 training got faster with SGE but still really really slow... 
 SGE-64-20 took about 1.5 Days... 
+SGE-256-20 taking about 2.5 Days even after implementing multi core training

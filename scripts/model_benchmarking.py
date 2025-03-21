@@ -4,6 +4,7 @@ import pandas as pd
 import pickle
 import os
 import csv
+from enum import Enum
 
 with open("../data/tokenized_data/playlist_names/dataset_test_v3.pkl", "rb") as f:
     tokenized_playlists = pickle.load(f)
@@ -14,7 +15,33 @@ test_set = tokenized_playlists[:250]
 TOP_N = 250
 
 
-def evaluate_recall_precision_macro(model, playlists, top_n=10):
+class ModelType(Enum):
+    GENSIM = "gensim"
+    SGE = "sge"
+    CBOE = "cboe"
+    ECP = "ecp"
+
+
+def get_nearest(model, song: str, top_n: int, model_type: ModelType):
+    """
+    using the embedding model to get the same output every time and sorting out the
+    picking of the model
+    """
+    if model_type == ModelType.GENSIM:
+        return model.wv.most_similar(song, topn=top_n)
+    elif model_type == ModelType.CBOE:
+        raise NotImplementedError("CBOE not implemented")
+    elif model_type == ModelType.ECP:
+        raise NotImplementedError("ECP not implemented")
+    elif model_type == ModelType.SGE:
+        raise NotImplementedError("SGE not implemented")
+    else:
+        raise TypeError("this type is not known jet")
+
+
+def evaluate_recall_precision_macro(
+    model, playlists, top_n=10, model_type=ModelType.GENSIM
+):
     """
     Evaluates the model by computing the macro-average precision and recall.
     For each song (query), the ground truth is all the other songs in its playlist.
@@ -29,7 +56,7 @@ def evaluate_recall_precision_macro(model, playlists, top_n=10):
             if not ground_truth:
                 continue
             try:
-                similar_songs = model.nearest(song, top_n)
+                similar_songs = get_nearest(model, song, top_n, model_type)
             except KeyError:
                 continue
             recommended = {rec_song for rec_song, _ in similar_songs}
@@ -47,7 +74,9 @@ def evaluate_recall_precision_macro(model, playlists, top_n=10):
     return avg_precision, avg_recall
 
 
-def evaluate_recall_precision_micro(model, playlists, top_n=100):
+def evaluate_recall_precision_micro(
+    model, playlists, top_n=100, model_type=ModelType.GENSIM
+):
     """
     Computes micro-averaged precision and recall over all queries.
     """
@@ -62,15 +91,11 @@ def evaluate_recall_precision_micro(model, playlists, top_n=100):
                 continue
 
             try:
-                # about avg playlist size + some
-                # similar_words = model.nearest(song, top_n)
-                similar_words = model.wv.most_similar(song, topn=top_n)
+                similar_words = get_nearest(model, song, top_n, model_type)
 
                 similar_songs = [
                     (word, sim) for word, sim in similar_words if sim >= 0.75
                 ]
-
-                # similar_songs = model.wv.most_similar(song, topn=top_n)
             except KeyError:
                 continue
 
@@ -87,7 +112,7 @@ def evaluate_recall_precision_micro(model, playlists, top_n=100):
 
 
 # precisssion@1
-def precision_at_1(model):
+def precision_at_1(model, model_type=ModelType.GENSIM):
     tested = 0
     correct = 0
 
@@ -102,7 +127,7 @@ def precision_at_1(model):
 
             try:
 
-                similar_words = model.wv.most_similar(song, topn=1)
+                similar_words = get_nearest(model, song, 1, model_type)
                 if similar_words == []:
                     continue
 

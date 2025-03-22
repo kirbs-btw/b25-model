@@ -30,11 +30,11 @@ def get_nearest(model, song: str, top_n: int, model_type: ModelType):
     if model_type == ModelType.GENSIM:
         return model.wv.most_similar(song, topn=top_n)
     elif model_type == ModelType.CBOE:
-        raise NotImplementedError("CBOE not implemented")
+        return model.nearest(song, k=top_n)
     elif model_type == ModelType.ECP:
-        raise NotImplementedError("ECP not implemented")
+        return model.nearest(song, k=top_n)
     elif model_type == ModelType.SGE:
-        raise NotImplementedError("SGE not implemented")
+        return model.nearest(song, k=top_n)
     else:
         raise TypeError("this type is not known jet")
 

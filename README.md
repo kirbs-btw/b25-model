@@ -8,6 +8,8 @@ The project provides implementations of several established embedding models alo
 - getting all the f1 scores for every model with the v3 data
 - putting together the paper for this repo
 - refactoring CBOE 
+- write one pretty package out of the entity embedding trainings
+    - inheritance and everything you know
 
 ## notes 
 training got faster with SGE but still really really slow... 

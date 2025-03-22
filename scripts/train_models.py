@@ -15,8 +15,8 @@ with open("../data/tokenized_data/playlist_names/dataset_train_v3.pkl", "rb") as
 algorithms_map = {0: "CBOW", 1: "SG"}
 
 none_window_algorithms_map = {
-    # "ECP": "ECP",
-    "SGE": "SGE",
+    "ECP": "ECP",
+    # "SGE": "SGE", # still need to train the 512-20 version of it
     "CBOE": "CBOE",
 }
 

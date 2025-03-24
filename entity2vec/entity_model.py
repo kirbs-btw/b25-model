@@ -12,6 +12,8 @@ from abc import ABC, abstractmethod
 
 
 class EntityModel(ABC):
+    VERSION = "1.0.0"
+
     def __init__(
         self,
         training_data,

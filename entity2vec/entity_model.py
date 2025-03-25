@@ -3,13 +3,6 @@ import math
 import numpy as np
 from abc import ABC, abstractmethod
 
-# here creating a parent class to inherit from for the other models etc
-
-# save model
-# load model
-# nearest function
-# but training should be different for all the models oc
-
 
 class EntityModel(ABC):
     VERSION = "1.0.0"
@@ -100,10 +93,20 @@ class EntityModel(ABC):
         ]
 
     def save(self, path):
+        """
+        saving the model to a pkl file
+        """
         with open(path, "wb") as file:
             pickle.dump(self, file)
 
     @classmethod
     def load(cls, path):
+        """
+        loading the model from the pkl file
+        """
         with open(path, "rb") as file:
             return pickle.load(file)
+
+
+### Notes for further development
+# abstracting the base class even more out

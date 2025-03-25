@@ -45,26 +45,36 @@ class EntityModel(ABC):
     def __epoch(training_data):
         """
         here you need to implement the training of your model
+        this will change the vectors behind the vector_map to describe the entities
         """
         pass
 
     def __train_model(self, training_data):
+        """
+        training the model with an algorithm along the epochs
+        """
         for _ in range(self.epochs):
             self.__epoch(training_data)
 
-    def nearest(self, word, k=1):
-        # If the word isn't in the vector map, return an empty list.
-        if word not in self.vector_map:
+    def nearest(self, entity: str, k: int = 1):
+        """
+        getting the top k nearest vectors to an entity
+        """
+        assert isinstance(entity, str), "Entity must be a string"
+        assert isinstance(k, int), "k must be an integer"
+        assert k > 0, "k must be greater than 0"
+
+        if entity not in self.vector_map:
             return []
 
-        target_vector = self.vector_map[word]
+        target_vector = self.vector_map[entity]
 
         # Cache the keys and vectors if they haven't been cached already.
-        if not hasattr(self, "_words"):
-            self._words = list(self.vector_map.keys())
+        if not hasattr(self, "_entities"):
+            self._entities = list(self.vector_map.keys())
             self._vectors = np.array(list(self.vector_map.values()))
 
-        words = self._words
+        entities = self._entities
         vectors = self._vectors
 
         # Compute the difference between all vectors and the target.
@@ -73,7 +83,7 @@ class EntityModel(ABC):
         sq_dists = np.einsum("ij,ij->i", diff, diff)
 
         # Exclude the target word itself by setting its distance to infinity.
-        idx = words.index(word)
+        idx = entities.index(entity)
         sq_dists[idx] = np.inf
 
         # Ensure that k does not exceed the number of available words.
@@ -85,7 +95,7 @@ class EntityModel(ABC):
 
         # Compute the square root only for the k nearest neighbors and return the results.
         return [
-            [words[i], 1 - (np.sqrt(sq_dists[i]) / self.__max_distance)]
+            [entities[i], 1 - (np.sqrt(sq_dists[i]) / self.__max_distance)]
             for i in sorted_candidates
         ]
 

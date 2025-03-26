@@ -31,7 +31,7 @@ class Entity2Vec:
         self.min_count = min_count
         self.window = window
         self.epochs = epochs
-        self.lr = learning_rate
+        self.learning_rate = learning_rate
 
         # 1) Build the vocabulary
         self._build_vocab(sentences)
@@ -107,7 +107,7 @@ class Entity2Vec:
 
                     # Update W_out for the target word:
                     #   W_out[target_idx] -= lr * grad * context_vec
-                    self.W_out[target_idx] -= self.lr * grad * context_vec
+                    self.W_out[target_idx] -= self.learning_rate * grad * context_vec
 
                     # Update W_in for *all context words* in one shot.
                     # context_indices = all but `target_idx`.
@@ -119,10 +119,10 @@ class Entity2Vec:
                     # But we need to exclude the target word from the update.
                     # We'll do a quick trick: update *all* then add back the target since we subtracted it by accident.
 
-                    self.W_in[word_indices] -= self.lr * grad_context
+                    self.W_in[word_indices] -= self.learning_rate * grad_context
                     # We added an unwanted update to the target word (target_idx),
                     # so we *undo* that for the target word:
-                    self.W_in[target_idx] += self.lr * grad_context
+                    self.W_in[target_idx] += self.learning_rate * grad_context
 
             print(f"Epoch {epoch+1}/{self.epochs}, Loss: {total_loss:.4f}")
 

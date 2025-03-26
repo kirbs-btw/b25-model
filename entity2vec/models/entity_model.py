@@ -24,6 +24,11 @@ class EntityModel(ABC):
         self.__train_model(training_data)
 
     def __create_vec_map(self, training_data: list) -> dict:
+        """
+        create a mapping of the entities to random vectors where every value is in I=[-1,1]
+        """
+        assert self.min_count == 1, "min count changes are not implemented"
+
         # Flatten the nested list of clusters and extract unique entries
         unique_entries = set(text for cluster in training_data for text in cluster)
         # Create a mapping from each unique entry to a random vector
@@ -35,19 +40,19 @@ class EntityModel(ABC):
 
     @classmethod
     @abstractmethod
-    def __epoch(training_data):
+    def __epoch(self, training_data: list[list[str]], iteration: int):
         """
         here you need to implement the training of your model
         this will change the vectors behind the vector_map to describe the entities
         """
         pass
 
-    def __train_model(self, training_data):
+    def __train_model(self, training_data: list[list[str]]):
         """
         training the model with an algorithm along the epochs
         """
-        for _ in range(self.epochs):
-            self.__epoch(training_data)
+        for iteration in range(self.epochs):
+            self.__epoch(training_data, iteration)
 
     def nearest(self, entity: str, k: int = 1):
         """

@@ -24,6 +24,7 @@ sge/strg
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 .env/
+data/
 
 # Logs and debug output
 *.log

@@ -40,7 +40,7 @@ class EntityModel(ABC):
 
     @classmethod
     @abstractmethod
-    def __epoch(self, training_data: list[list[str]], iteration: int):
+    def epoch(self, training_data: list[list[str]], iteration: int):
         """
         here you need to implement the training of your model
         this will change the vectors behind the vector_map to describe the entities
@@ -52,9 +52,9 @@ class EntityModel(ABC):
         training the model with an algorithm along the epochs
         """
         for iteration in range(self.epochs):
-            self.__epoch(training_data, iteration)
+            self.epoch(training_data, iteration)
 
-    def nearest(self, entity: str, k: int = 1):
+    def nearest(self, entity: str, k: int = 1) -> list:
         """
         getting the top k nearest vectors to an entity
         """

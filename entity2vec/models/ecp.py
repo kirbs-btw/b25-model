@@ -4,7 +4,7 @@ import math
 
 
 class Ecp(EntityModel):
-    def __epoch(self, training_data: list[list[str]], iteration: int):
+    def epoch(self, training_data: list[list[str]], iteration: int):
         for raw_entity_set in training_data:
             # creating a list of the vectors
 
@@ -39,6 +39,15 @@ class Ecp(EntityModel):
                 self.vector_map[entity_list[i]] = target_vector + scaled_gradient_vector
                 vector_sum += scaled_gradient_vector
 
+
+if __name__ == "__main__":
+    data = [["hello", "i", "a"], ["i", "a", "fff"], ["i", "hello"]]
+
+    model = Ecp(
+        training_data=data, vector_size=16, min_count=1, epochs=5, learning_rate=0.025
+    )
+
+    assert isinstance(model.nearest("hello"), list)
 
 ### Development Notes
 ### looking into backpropagation

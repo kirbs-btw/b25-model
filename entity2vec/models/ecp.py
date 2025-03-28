@@ -11,9 +11,9 @@ class Ecp(EntityModel):
             entity_vectors = []
             entity_list = []
             for e in raw_entity_set:
-                if e not in self.vector_map:
+                if not self.in_vector_map(e):
                     continue
-                entity_vectors.append(self.vector_map[e])
+                entity_vectors.append(self.get_vector[e])
                 entity_list.append(e)
 
             # checking if entity set has meaning (len > 1)
@@ -36,7 +36,7 @@ class Ecp(EntityModel):
                 scaled_gradient_vector = (
                     gradient_vector * self.learning_rate * pred_prob
                 )
-                self.vector_map[entity_list[i]] = target_vector + scaled_gradient_vector
+                self.set_vector(entity_list[i], target_vector + scaled_gradient_vector)
                 vector_sum += scaled_gradient_vector
 
 

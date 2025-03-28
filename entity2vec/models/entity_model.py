@@ -38,6 +38,12 @@ class EntityModel(ABC):
         }
         return vec_map
 
+    def get_vector(self, key: str):
+        return self.vector_map[key]
+
+    def set_vector(self, key: str, vector: list):
+        self.vector_map[key] = vector
+
     @classmethod
     @abstractmethod
     def epoch(self, training_data: list[list[str]], iteration: int):
@@ -115,3 +121,6 @@ class EntityModel(ABC):
 
 ### Notes for further development
 # abstracting the base class even more out
+# splify the nearest function to be faster and maybe also change the data type of the saved
+# vectors to
+# add a change vector and get vector function to prep for changes with the data type

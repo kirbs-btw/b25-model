@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 
 class EntityModel(ABC):
-    VERSION = "1.0.0"
+    VERSION = "1.0.1"
 
     def __init__(
         self,
@@ -43,6 +43,9 @@ class EntityModel(ABC):
 
     def set_vector(self, key: str, vector: list):
         self.vector_map[key] = vector
+
+    def in_vector_map(self, key: str):
+        return key in self.vector_map
 
     @classmethod
     @abstractmethod
@@ -120,7 +123,5 @@ class EntityModel(ABC):
 
 
 ### Notes for further development
-# abstracting the base class even more out
 # splify the nearest function to be faster and maybe also change the data type of the saved
 # vectors to
-# add a change vector and get vector function to prep for changes with the data type

@@ -10,7 +10,7 @@ class Sge(EntityModel):
         for non sequential data training
         """
         for raw_entity_set in training_data:
-
+            sentence_loss = 0
             # obey min_count - if min count =1 -> entity_set == raw_entity_set
             entity_set = [
                 entity for entity in raw_entity_set if self.in_vector_map(entity)
@@ -37,15 +37,34 @@ class Sge(EntityModel):
                 for context_entity, grad in zip(context_entities, grads):
                     self.set_vector(
                         context_entity,
-                        self.get_vector(context_entity) - self.lr * grad * target_vec,
+                        self.get_vector(context_entity)
+                        - self.learning_rate * grad * target_vec,
                     )
 
                 # Update: Input-Embedding des Ziel-Entities (Summe der Gradienten × Kontext-Vektoren)
                 self.set_vector(
                     target_entity,
                     self.get_vector(context_entity)
-                    - self.lr * np.dot(grads, context_vecs),
+                    - self.learning_rate * np.dot(grads, context_vecs),
                 )
+
+
+if __name__ == "__main__":
+    data = [
+        ["hello", "i", "a"],
+        ["i", "a", "fff"],
+        ["i", "hello"],
+        ["i", "hello"],
+        ["i", "hello"],
+    ]
+
+    model = Sge(
+        training_data=data, vector_size=16, min_count=1, epochs=5, learning_rate=0.025
+    )
+
+    print(model.nearest("hello"))
+
+    assert isinstance(model.nearest("hello"), list)
 
 
 ### dev notes

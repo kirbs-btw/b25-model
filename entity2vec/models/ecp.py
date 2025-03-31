@@ -13,7 +13,7 @@ class Ecp(EntityModel):
             for e in raw_entity_set:
                 if not self.in_vector_map(e):
                     continue
-                entity_vectors.append(self.get_vector[e])
+                entity_vectors.append(self.get_vector(e))
                 entity_list.append(e)
 
             # checking if entity set has meaning (len > 1)

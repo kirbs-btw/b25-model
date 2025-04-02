@@ -10,7 +10,7 @@ class Sge(EntityModel):
         for non sequential data training
         """
         for raw_entity_set in training_data:
-            sentence_loss = 0
+            set_loss = 0
             # obey min_count - if min count =1 -> entity_set == raw_entity_set
             entity_set = [
                 entity for entity in raw_entity_set if self.in_vector_map(entity)
@@ -30,7 +30,7 @@ class Sge(EntityModel):
                 scores = np.dot(context_vecs, target_vec)
                 pred_probs = 1.0 / (1.0 + np.exp(-scores))
 
-                sentence_loss += -np.sum(np.log(pred_probs + 1e-10))
+                set_loss += -np.sum(np.log(pred_probs + 1e-10))
 
                 grads = pred_probs - 1.0
 

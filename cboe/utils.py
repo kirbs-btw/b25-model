@@ -73,58 +73,10 @@ class Entity2Vec:
         """
         Train the model using a naive CBOW approach.
         The entire sentence is considered the context (excluding the target).
+
+        no that is not a CBOW approach here
         """
-        for epoch in range(self.epochs):
-            total_loss = 0.0
-            for sent in sentences:
-                # Convert sentence words to indices (filter out unknown words)
-                word_indices = [
-                    self.word_to_idx[w] for w in sent if w in self.word_to_idx
-                ]
-                n = len(word_indices)
-                if n < 2:
-                    continue  # Skip short sentences
-
-                # --- Optimization key: sum of all embeddings in the sentence ---
-                # We'll subtract the target's embedding to get the context sum.
-                sent_sum = np.sum(
-                    self.W_in[word_indices], axis=0
-                )  # shape: (vector_size,)
-
-                for i, target_idx in enumerate(word_indices):
-                    # The context sum is (sent_sum - embedding_of_target).
-                    # The context vector is that difference, divided by (n - 1).
-                    context_vec = (sent_sum - self.W_in[target_idx]) / (n - 1)
-
-                    # Forward pass:
-                    score = np.dot(context_vec, self.W_out[target_idx])  # scalar
-                    pred_prob = 1.0 / (1.0 + np.exp(-score))
-                    loss = -math.log(pred_prob + 1e-10)
-                    total_loss += loss
-
-                    # Backprop (binary cross-entropy style):
-                    grad = pred_prob - 1.0  # dL/dscore
-
-                    # Update W_out for the target word:
-                    #   W_out[target_idx] -= lr * grad * context_vec
-                    self.W_out[target_idx] -= self.learning_rate * grad * context_vec
-
-                    # Update W_in for *all context words* in one shot.
-                    # context_indices = all but `target_idx`.
-                    # We'll apply the same gradient to each context word embedding:
-                    #   dL/dW_in[context] = grad * W_out[target_idx] / (n - 1)
-                    grad_context = grad * self.W_out[target_idx] / (n - 1)
-
-                    # Instead of looping, we can do boolean indexing or slicing:
-                    # But we need to exclude the target word from the update.
-                    # We'll do a quick trick: update *all* then add back the target since we subtracted it by accident.
-
-                    self.W_in[word_indices] -= self.learning_rate * grad_context
-                    # We added an unwanted update to the target word (target_idx),
-                    # so we *undo* that for the target word:
-                    self.W_in[target_idx] += self.learning_rate * grad_context
-
-            print(f"Epoch {epoch+1}/{self.epochs}, Loss: {total_loss:.4f}")
+        # need to fix that
 
     def nearest(self, word_or_vector, k=1):
         """

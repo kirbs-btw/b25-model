@@ -3,16 +3,21 @@ import pickle
 import os
 import sys
 
-sys.path.append(os.path.abspath("../"))
+# sys.path.append(os.path.abspath("../"))
 
-from sge import *
-from cboe import *
-from ecp import *
+# from sge import *
+# from cboe import *
+# from ecp import *
 
-with open("../data/tokenized_data/playlist_names/dataset_train_v3.pkl", "rb") as f:
+with open(
+    "../data/tokenized_data/playlist_names/fresh_dataset_train_v2.pkl", "rb"
+) as f:
     train_dataset = pickle.load(f)
 
-algorithms_map = {0: "CBOW", 1: "SG"}
+algorithms_map = {
+    0: "CBOW",
+    # 1: "SG"
+}
 
 none_window_algorithms_map = {
     "ECP": "ECP",
@@ -20,9 +25,19 @@ none_window_algorithms_map = {
     "CBOE": "CBOE",
 }
 
-window_sizes = [10, 150]
-epochs = [5, 20]
-vector_sizes = [64, 256, 512]
+window_sizes = [
+    # 10,
+    150
+]
+epochs = [
+    5,
+    # 20
+]
+vector_sizes = [
+    # 64,
+    256,
+    # 512
+]
 
 
 def train_windowed_algorithms():
@@ -31,7 +46,7 @@ def train_windowed_algorithms():
             for epoch in epochs:
                 for window_size in window_sizes:
                     model_name = f"b25-{algorithms_map[algorithm]}-{vector_size}-{epoch}-{window_size}"
-                    model_save_path = f"../models_str/{model_name}.model"
+                    model_save_path = f"../models_str/{model_name}v2.model"
 
                     print(f"working on: {model_name}")
                     # checking if the model exists to not train it again
@@ -108,7 +123,7 @@ def train_inf_window_algorithms():
 
 def train_all():
     train_windowed_algorithms()
-    train_inf_window_algorithms()
+    # train_inf_window_algorithms()
 
 
 if __name__ == "__main__":

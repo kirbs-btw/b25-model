@@ -39,3 +39,8 @@ This work builds on the principles of distributional semantics and recommendatio
 - Wang et al. (2017, 2020) on vector-based recommendation methods  
 - Musto et al. (2015) on applying **word embeddings** to recommender systems  
 - And others noted throughout the documentation
+
+
+## notes 
+data quality is bad 
+need for adjustmens in the min word count 

@@ -24,10 +24,54 @@ This project explores how **word embedding techniques**—commonly used in **nat
    - **GloVe-Inspired**: Builds a global co-occurrence matrix for playlists.  
    - **CBOE, SGE, ECP**: Original algorithms designed for entity (song) embeddings in non-sequential data.
 
-3. **Evaluation**  
-   - **F1 Score** used as the primary metric.  
-   - **Precision**: Fraction of recommended songs that actually belong in the playlist.  
-   - **Recall**: Fraction of actual songs correctly recommended by the model.
+## Evaluation
+- **F1 Score** used as the primary metric.  
+- **Precision**: Fraction of recommended songs that actually belong in the playlist.  
+- **Recall**: Fraction of actual songs correctly recommended by the model.
+
+## Benchmarking (Coming Soon)
+Proper benchmarking of music recommendation models requires a comprehensive evaluation framework that goes beyond simple precision/recall metrics. Here's how our benchmarking should be structured:
+
+### 1. **Evaluation Metrics**
+- **Accuracy Metrics**: Precision@k, Recall@k, F1@k, NDCG@k, MAP
+- **Diversity Metrics**: Intra-list diversity, Coverage of catalog
+- **Novelty Metrics**: Popularity bias, Long-tail coverage
+- **Efficiency Metrics**: Training time, inference time, memory usage
+
+### 2. **Evaluation Protocol**
+- **Cross-Validation**: K-fold cross-validation with playlist-aware splitting
+- **Cold-Start Testing**: Evaluate on users/playlists with limited interaction history
+- **Temporal Split**: Train on older data, test on newer data to simulate real-world usage
+- **Multiple Test Sets**: Different playlist sizes, genres, and user demographics
+
+### 3. **Baseline Comparisons**
+- **Traditional Methods**: Collaborative filtering, content-based filtering
+- **State-of-the-Art**: BERT4Rec, SASRec, LightGCN
+- **Random Baseline**: Random song selection for sanity checking
+- **Popularity Baseline**: Most popular songs in the dataset
+
+### 4. **Statistical Significance**
+- **Paired t-tests** for comparing model performance
+- **Confidence intervals** for all reported metrics
+- **Effect size analysis** to determine practical significance
+
+### 5. **Ablation Studies**
+- **Hyperparameter sensitivity**: Vector dimensions, learning rates, epochs
+- **Architecture variations**: Different context window sizes, negative sampling strategies
+- **Data quality impact**: Effect of minimum word count, playlist filtering
+
+### 6. **Real-World Evaluation**
+- **User Studies**: A/B testing with real users
+- **Business Metrics**: Click-through rates, conversion rates, user engagement
+- **Scalability Testing**: Performance on large-scale datasets
+
+### 7. **Reproducibility**
+- **Fixed Random Seeds**: Ensures consistent results across runs
+- **Detailed Logging**: Training curves, hyperparameters, data preprocessing steps
+- **Code Documentation**: Clear implementation details for all models
+- **Results Repository**: Centralized storage of all benchmark results
+
+The current benchmarking implementation is being refactored to incorporate these best practices and provide a more robust comparison between our novel algorithms (CBOE, SGE, ECP) and traditional approaches.
 
 ## Contributing
 We welcome contributions via pull requests. For major changes, please open an issue first to discuss potential improvements.
@@ -44,3 +88,4 @@ This work builds on the principles of distributional semantics and recommendatio
 ## notes 
 data quality is bad 
 need for adjustmens in the min word count 
+

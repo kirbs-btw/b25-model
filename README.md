@@ -6,11 +6,11 @@
 
 ## Abstract
 
-This repository contains **b25**, an experimental framework that adapts classical word embedding techniques from natural language processing (NLP) to **playlist-based music recommendation**.  
+This repository contains **b25**, an experimental framework that adapts classical word embedding techniques from natural language processing (NLP) to **playlist-based music recommendation**.
 
-By treating playlists as analogues of sentences and songs as entities (words), the project investigates how models such as **CBOW**, **Skip-Gram**, and a **GloVe-inspired global co-occurrence model**, as well as the novel **CBOE**, **SGE**, and **ECP** algorithms, can learn meaningful song embeddings from **non-sequential** playlist data.
+By treating playlists as analogues of sentences and songs as entities (words), the project investigates how models such as **CBOW**, **Skip-Gram**, and a **GloVe-inspired global co-occurrence model**, as well as entity-centric variants **CBOE**, **SGE**, and a cluster-based **ECP** update rule, can learn meaningful song embeddings from **weakly ordered / set-like** playlist data.
 
-The experiments show that models which exploit **global co-occurrence structure**, in particular larger Skip-Gram variants with broad contexts, achieve strong recommendation performance (up to ~77.39% precision@1 in internal experiments), while the newly introduced **Entity Cluster Push (ECP)** requires further refinement.
+Experiments show that models which exploit **global co-occurrence structure**, in particular larger Skip-Gram variants with broad contexts, achieve strong recommendation performance (up to about **77.39% precision@1** in internal experiments), while the introduced **Entity Cluster Push (ECP)** prototype underperforms and requires further refinement.
 
 ---
 
@@ -26,7 +26,7 @@ In this project, we transfer that idea from text to music:
 - **Sentences** → playlists  
 - **Corpus** → collection of curated Spotify playlists  
 
-Unlike sentences, playlists are often **weakly ordered**: the semantic relation between two songs is more about **co-occurrence in the same playlist** than about their exact adjacency. This motivates embedding models that focus on **sets / clusters of entities**, instead of strict sequences.
+Unlike sentences, playlists are often **weakly ordered**: the semantic relation between two songs is more about **co-occurrence in the same playlist** than about their exact adjacency. This motivates embedding models that focus on **sets / clusters of entities** instead of strict sequences.
 
 ---
 
@@ -34,27 +34,27 @@ Unlike sentences, playlists are often **weakly ordered**: the semantic relation 
 
 Let
 
-- \(\mathcal{V}\) be the set of all songs (the vocabulary),
-- a playlist be a finite subset (or multiset) \(P \subseteq \mathcal{V}\),
-- a dataset of playlists be \(\mathcal{P} = \{ P_1, \dots, P_M \}\).
+- $\mathcal{V}$ be the set of all songs (the vocabulary),
+- a playlist be a finite subset (or multiset) $P \subseteq \mathcal{V}$,
+- a dataset of playlists be $\mathcal{P} = \{ P_1, \dots, P_M \}$.
 
 We seek an embedding function
 
-\[
-f : \mathcal{V} \to \mathbb{R}^d, \quad e \mapsto \mathbf{v}_e
-\]
+$$
+f : \mathcal{V} \to \mathbb{R}^d, \quad e \mapsto \mathbf{v}_e,
+$$
 
-such that **co-occurring songs in playlists** have **similar vectors** in \(\mathbb{R}^d\).
+such that **co-occurring songs in playlists** have **similar vectors** in $\mathbb{R}^d$.
 
-### Co-occurrence Matrix
+### 2.1 Co-occurrence Matrix
 
-For global methods we define a symmetric co-occurrence matrix \(X \in \mathbb{R}^{|\mathcal{V}| \times |\mathcal{V}|}\) by
+For global methods we define a symmetric co-occurrence matrix $X \in \mathbb{R}^{|\mathcal{V}| \times |\mathcal{V}|}$ by
 
-\[
-X_{ij} = \text{# of playlists in which songs } e_i \text{ and } e_j \text{ co-occur}.
-\]
+$$
+X_{ij} = \text{number of playlists in which songs } e_i \text{ and } e_j \text{ co-occur}.
+$$
 
-This matrix is the basis for the GloVe-inspired model and informs the design of the entity-based variants.
+In practice, we are interested in pairs with $X_{ij} > 0$ (i.e., songs that co-occur at least once). This matrix is the basis for the GloVe-inspired model and informs the design of the entity-based variants.
 
 ---
 
@@ -64,132 +64,110 @@ This matrix is the basis for the GloVe-inspired model and informs the design of 
 
 #### 3.1.1 CBOW (Continuous-Bag-of-Words)
 
-CBOW predicts a **center word** \(c\) from its **context words** \((w_1, \dots, w_n)\). The classical objective maximizes
+CBOW predicts a **center word** $w_t$ from its **context words** within a window around it. Let $\text{context}(w_t)$ denote the multiset of words in that window. The classical objective is
 
-\[
-\log P(c \mid w_1, \dots, w_n)
-\approx \sum_{i=1}^n \log P(c \mid w_i).
-\]
+$$
+\max_{\theta} \sum_{t=1}^{T} 
+\log P\big(w_t \mid \text{context}(w_t); \theta\big),
+$$
 
-Over the corpus this yields
+where $P(\cdot \mid \cdot)$ is typically parameterized using the average of the embeddings of the context words and a softmax over the vocabulary. The model learns distributed representations such that words appearing in similar contexts have similar embeddings.
 
-\[
-\max_{\theta} \sum_{w \in \text{text}} \sum_{c \in \text{context}(w)} \log P(c \mid w; \theta),
-\]
-
-where \(\theta\) contains the embedding parameters.
-
-**Playlist adaptation:**  
-In b25, we reinterpret **context** as the set of songs in the same playlist. For a playlist \(P\) and a target song \(e \in P\), the context is
-
-\[
-C(e, P) = P \setminus \{ e \}.
-\]
-
-CBOW then aggregates the embeddings of \(C(e, P)\) to predict \(e\).
+*(In b25, CBOW is used as a conceptual baseline; the playlist-specific adaptation is formalized as CBOE in Section 3.2.1.)*
 
 ---
 
 #### 3.1.2 Skip-Gram (SG)
 
-Skip-Gram inverts CBOW: given a **center word** \(w_t\), it predicts surrounding context words \(w_{t+j}\). The classic objective is
+Skip-Gram inverts CBOW: given a **center word** $w_t$, it predicts each surrounding context word $w_{t+j}$ in a fixed window. The classic objective is
 
-\[
+$$
 \max_{\theta} \sum_{t=1}^{T}
 \sum_{\substack{-c \le j \le c \\ j \ne 0}}
-\log P(w_{t+j} \mid w_t),
-\]
+\log P(w_{t+j} \mid w_t; \theta),
+$$
 
-where \(c\) is the context window size.
+where $c$ is the context window size.
 
 The conditional probability is typically modelled using a softmax:
 
-\[
+$$
 P(w_o \mid w_I) =
 \frac{\exp(\mathbf{v}_{w_o}^\top \mathbf{v}_{w_I})}
 {\sum_{w=1}^W \exp(\mathbf{v}_w^\top \mathbf{v}_{w_I})},
-\]
+$$
 
-with \(\mathbf{v}_{w_I}\) and \(\mathbf{v}_{w_o}\) being input and output embeddings.
+with $\mathbf{v}_{w_I}$ and $\mathbf{v}_{w_o}$ being input and output embeddings.
 
-**Playlist adaptation (wide context):**  
-We drop the sequential window and treat **all other songs in the playlist** as context:
-
-\[
-J_{\text{SG-playlist}} =
-\sum_{P \in \mathcal{P}}
-\sum_{e_i \in P}
-\sum_{\substack{e_j \in P \\ j \ne i}}
-\log P(e_j \mid e_i).
-\]
-
-This effectively corresponds to an “infinite” window over the set \(P\).
+*(In b25, the playlist-specific Skip-Gram variant is formalized as SGE in Section 3.2.2.)*
 
 ---
 
 #### 3.1.3 GloVe-Inspired Global Co-Occurrence Embedding
 
-Following GloVe, we use the global co-occurrence matrix \(X\) and optimize embeddings \(\mathbf{w}_i, \tilde{\mathbf{w}}_j \in \mathbb{R}^d\) and biases \(b_i, \tilde{b}_j \in \mathbb{R}\) via a **weighted least-squares loss**:
+Following GloVe, we use the global co-occurrence matrix $X$ and optimize embeddings $\mathbf{w}_i, \tilde{\mathbf{w}}_j \in \mathbb{R}^d$ and biases $b_i, \tilde{b}_j \in \mathbb{R}$ via a **weighted least-squares loss**:
 
-\[
+$$
 J_{\text{GloVe}} =
-\sum_{i,j} f(X_{ij})
+\sum_{\substack{i,j \\ X_{ij} > 0}} f(X_{ij})
 \left(
 \mathbf{w}_i^\top \tilde{\mathbf{w}}_j
 + b_i + \tilde{b}_j
 - \log X_{ij}
 \right)^2,
-\]
+$$
 
-where \(f(\cdot)\) is a weighting function that down-weights very rare or extremely frequent co-occurrences.
+where $f(\cdot)$ is a weighting function that down-weights very rare or extremely frequent co-occurrences. Restricting the sum to $X_{ij} > 0$ ensures that $\log X_{ij}$ is well-defined.
 
-In b25, co-occurrence counts \(X_{ij}\) come from **playlist-level co-inclusion** rather than local windows in a text.
+In b25, co-occurrence counts $X_{ij}$ come from **playlist-level co-inclusion** rather than local windows in a text.
 
 ---
 
-### 3.2 Proposed Entity-Centric Models
+### 3.2 Entity-Centric Playlist Models
 
-The following models are designed specifically for **non-sequential entity sets** like playlists.
+The following models are designed specifically for **non-sequential / weakly ordered entity sets** like playlists, where **co-occurrence within a set** is more important than position.
 
 #### 3.2.1 CBOE – Continuous-Bag-of-Entities
 
-CBOE generalizes CBOW by:
+CBOE adapts CBOW to sets of entities by:
 
 - removing the notion of a **fixed context window**, and  
 - treating the entire playlist (minus the target entity) as the context.
 
-For a playlist \(P = \{ e_1, \dots, e_n \}\) and target entity \(e_k\), we define the **context vector**
+For a playlist $P = \{ e_1, \dots, e_n \}$ and target entity $e_k$, we define the **context vector**
 
-\[
+$$
 \mathbf{c}_{e_k} =
 \frac{1}{|P| - 1}
 \sum_{e \in P \setminus \{e_k\}}
 \mathbf{v}_e.
-\]
+$$
 
-The model then maximizes the likelihood of \(e_k\) given \(\mathbf{c}_{e_k}\), analogously to CBOW but geared towards **unordered entity sets**:
+The model then maximizes the likelihood of $e_k$ given $\mathbf{c}_{e_k}$, analogous to CBOW but geared towards **unordered entity sets**:
 
-\[
+$$
 \max_{\theta} \sum_{P \in \mathcal{P}}
 \sum_{e_k \in P}
 \log P(e_k \mid \mathbf{c}_{e_k}; \theta).
-\]
+$$
+
+In other words, **CBOE is CBOW applied to playlists treated as bags of entities**.
 
 ---
 
 #### 3.2.2 SGE – Skip-Gram for Entities
 
-SGE adapts Skip-Gram to entity sets where **all co-occurring entities are treated symmetrically**. For each playlist \(P\),
+SGE adapts Skip-Gram to entity sets where **all co-occurring entities are treated symmetrically**. Instead of a positional window, every pair of distinct songs in the same playlist forms a training signal. For each playlist $P$,
 
-\[
+$$
 J_{\text{SGE}} =
 \sum_{P \in \mathcal{P}}
 \sum_{e_i \in P}
 \sum_{\substack{e_j \in P \\ j \ne i}}
-\log P(e_j \mid e_i),
-\]
+\log P(e_j \mid e_i; \theta),
+$$
 
-with the same softmax parameterization as standard Skip-Gram, but no positional window or distance-based weighting. Every pair of distinct songs in the same playlist forms a training signal.
+with the same softmax parameterization as standard Skip-Gram, but **no positional window or distance-based weighting**. This corresponds to an “infinite” window over the set $P$.
 
 ---
 
@@ -197,38 +175,38 @@ with the same softmax parameterization as standard Skip-Gram, but no positional 
 
 Entity Cluster Push (ECP) is a cluster-oriented embedding update rule that directly **pulls entity vectors towards their cluster centroid**.
 
-For a playlist (cluster) \(P = \{ e_1, \dots, e_n \}\), we define the **base vector**
+For a playlist (cluster) $P = \{ e_1, \dots, e_n \}$, we define the **base vector**
 
-\[
+$$
 \mathbf{b} = \sum_{i=1}^n \mathbf{v}_{e_i}.
-\]
+$$
 
-For a given entity \(e_k \in P\), its **context vector** is
+For a given entity $e_k \in P$, its **context (centroid) vector** is
 
-\[
+$$
 \mathbf{c}_{e_k} =
 \frac{\mathbf{b} - \mathbf{v}_{e_k}}{n - 1},
-\]
+$$
 
 i.e., the mean embedding of all other entities in the cluster.
 
-We compute the Euclidean distance
+We can measure their Euclidean distance as
 
-\[
-\text{dist}_k = \left\| \mathbf{v}_{e_k} - \mathbf{c}_{e_k} \right\|_2
-\]
+$$
+\text{dist}_k = \left\| \mathbf{v}_{e_k} - \mathbf{c}_{e_k} \right\|_2,
+$$
 
-and update the entity embedding via
+and update the entity embedding via a step **towards** this centroid:
 
-\[
+$$
 \mathbf{v}_{e_k}
 \leftarrow
-\mathbf{v}_{e_k} + \alpha \cdot \text{dist}_k \cdot \mathbf{c}_{e_k},
-\]
+\mathbf{v}_{e_k} + \alpha \big( \mathbf{c}_{e_k} - \mathbf{v}_{e_k} \big),
+$$
 
-where \(\alpha\) is a learning rate.
+where $\alpha$ is a learning rate. This update decreases the distance between $\mathbf{v}_{e_k}$ and $\mathbf{c}_{e_k}$ (for $0 < \alpha < 1$), thereby pulling entities in a playlist closer together in embedding space.
 
-The base vector \(\mathbf{b}\) is updated accordingly to reflect changes in \(\mathbf{v}_{e_k}\), and this process is iterated over all entities in all clusters. Unlike CBOW/Skip-Gram, **ECP does not predict a target**; it directly optimizes the **relative geometry** of entity embeddings within playlists.
+The base vector $\mathbf{b}$ is updated accordingly to reflect changes in $\mathbf{v}_{e_k}$, and this process is iterated over all entities in all clusters. Unlike CBOW/Skip-Gram, **ECP does not predict a target**; it directly optimizes the **relative geometry** of entity embeddings within playlists.
 
 ---
 
@@ -239,7 +217,7 @@ The base vector \(\mathbf{b}\) is updated accordingly to reflect changes in \(\m
 - **Augmentation:** playlists are randomly **re-shuffled** to reduce any artefacts from the original order and encourage models to focus on co-occurrence rather than sequence.
 - **Split:** a **90% / 10% train–test split** over playlists is used.
 
-> Note: Due to limited coverage and noisy long-tail tracks, data quality remains a key limitation and is discussed in more detail below.
+Data quality and coverage (especially for long-tail tracks) are key limitations and are discussed in more detail in the accompanying paper draft.
 
 ---
 
@@ -247,32 +225,34 @@ The base vector \(\mathbf{b}\) is updated accordingly to reflect changes in \(\m
 
 For evaluation, each playlist is treated as a separate test case.
 
-Given a **seed song** \(s\) from a playlist \(P\):
+Given a **seed song** $s$ from a playlist $P$:
 
-1. The model retrieves candidate songs \(\hat{P}(s)\) based on embedding similarity.
-2. A recommendation is considered **correct** if the predicted song appears in the same playlist \(P\).
+1. The model retrieves candidate songs $\hat{P}(s)$ based on embedding similarity.
+2. A recommendation is considered **correct** if the predicted song appears in the same playlist $P$.
 
 ### 5.1 Precision, Recall, and F1
 
 Let
 
-- \(TP\) = number of correctly recommended songs,  
-- \(FP\) = number of recommended songs not in the playlist,  
-- \(FN\) = number of relevant songs in the playlist that were not recommended.
+- $TP$ = number of correctly recommended songs,  
+- $FP$ = number of recommended songs not in the playlist,  
+- $FN$ = number of relevant songs in the playlist that were not recommended.
 
 Then
 
-\[
+$$
 \text{Precision} = P = \frac{TP}{TP + FP},
-\]
-\[
-\text{Recall} = R = \frac{TP}{TP + FN},
-\]
-\[
-F_1 = 2 \cdot \frac{P \cdot R}{P + R}.
-\]
+$$
 
-We also monitor **precision@k**, e.g., precision@1 for the top-ranked recommendation.
+$$
+\text{Recall} = R = \frac{TP}{TP + FN},
+$$
+
+$$
+F_1 = 2 \cdot \frac{P \cdot R}{P + R}.
+$$
+
+We also report **precision@k**, e.g., precision@1 for the top-ranked recommendation.
 
 ---
 
@@ -280,7 +260,7 @@ We also monitor **precision@k**, e.g., precision@1 for the top-ranked recommenda
 
 High-level layout:
 
-- `ecp/` – implementation and experiments for **Entity Cluster Push**.
+- `ecp/` – implementation and experiments for **Entity Cluster Push (ECP)**.
 - `sge/` – Skip-Gram for Entities (**SGE**) models and experiments.
 - `entity2vec/` – shared embedding utilities and common components.
 - `notebooks/` – exploratory notebooks (model training, embedding visualization, analysis).
@@ -288,15 +268,15 @@ High-level layout:
 - `data/` – local placeholder for playlist data (not committed in full due to licensing / size).
 - `tests/` – minimal tests for core components.
 
-> See individual subdirectories for model-specific details and experiment configurations.
+See individual subdirectories for model-specific details and experiment configurations.
 
 ---
 
 ## 7. Key Findings (Short Summary)
 
-- **Global co-occurrence–aware models** (e.g., wide-context Skip-Gram variants) perform best in this setup, achieving up to **~77.39% precision@1** in internal experiments.
+- **Global co-occurrence–aware models** (e.g., wide-context, playlist-level Skip-Gram variants like SGE) perform best in this setup, achieving up to **≈77.39% precision@1** in internal experiments.
 - Purely proximity-based word-embedding strategies that rely heavily on sequential order are less well suited for playlist data.
-- **ECP**, while conceptually appealing for clusters, underperformed baselines in its current form and requires further tuning and potentially more expressive update rules.
+- **ECP**, while conceptually appealing for clusters, **underperformed** baselines in its current form and requires further tuning and potentially more expressive update rules.
 
 ---
 
